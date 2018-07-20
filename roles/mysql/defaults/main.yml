@@ -1,0 +1,11 @@
+---
+# defaults file for mysql
+storage:
+  grid:
+    db_name: opensim
+    db_user: gridadmin
+    db_password: admin
+  simulator:
+    db_name: simulator
+    db_user: regionadmin
+    db_password: admin

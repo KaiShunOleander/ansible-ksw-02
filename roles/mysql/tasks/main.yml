@@ -1,0 +1,9 @@
+---
+ - include_tasks: deploy_mysql.yml
+
+#  - name: create opensim database
+#    mysql_db: name={{db_name}} state=present
+
+#  - name: create opensim gridadmin
+#    mysql_user: name={{db_user}} password={db_password}} priv={{db_name}}.*:ALL host="%" state=present
+#    notify: restart mysql

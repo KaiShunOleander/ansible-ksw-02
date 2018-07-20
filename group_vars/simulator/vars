@@ -1,0 +1,7 @@
+---
+admin_user: regionadmin
+conf_dir: conf-regions
+
+db_name: simulator
+db_user: regionadmin
+db_password: "{{ vault_db_password }}"

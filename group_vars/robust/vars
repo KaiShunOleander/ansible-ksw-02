@@ -1,0 +1,7 @@
+---
+admin_user: gridadmin
+conf_dir: config-default
+
+db_name: opensim
+db_user: gridadmin
+db_password: "{{ vault_db_password }}"

@@ -1,0 +1,100 @@
+---
+# tasks file for opensim
+  - name: create opensim admin group
+    group: name="{{ admin_group }}" state=present
+    tags: [ 'identify' ]
+
+  - name: create system users for opensim administration
+    user: name="{{ admin_user }}" group="{{ admin_group }}" shell=/bin/bash
+      update_password=always state=present
+    tags: [ 'identity' ]
+
+  - name: add ssh keys for remote access by this control system
+    authorized_key: user="{{ admin_user }}" key="{{ lookup('file', public_key) }}"
+    tags: [ 'authenticate' ]
+
+  - name: git clone opensim binaries
+    become: yes
+    become_user: "{{ admin_user }}"
+    git:
+      repo: "{{git_bin}}"
+      dest: "/home/{{ admin_user }}/{{ host_version }}"
+      version: master
+      force: yes
+      accept_hostkey: yes
+      key_file: "/home/{{ admin_user }}/.ssh/id_rsa"
+    tags: [ 'deploy' ]
+
+  - name: git clone opensim configuration files
+    become: yes
+    become_user: "{{ admin_user }}"
+    git:
+      repo: "{{git_cnf}}"
+      dest: "/home/{{ admin_user }}/os-config"
+      version: master
+      force: yes
+      accept_hostkey: yes
+      key_file: "/home/{{ admin_user }}/.ssh/id_rsa"
+    tags: [ 'deploy' ]
+
+  - name: unlink existing default configuration folder
+    file: path="/home/{{ admin_user }}/{{ conf_dir }}" state=absent
+    changed_when: no
+    tags: [ 'deploy' ]
+
+  - name: activate configuration folder
+    become: yes
+    become_user: "{{ admin_user }}"
+    file:
+      src: "/home/{{ admin_user }}/os-config/{{ config_version }}"
+      dest: "/home/{{ admin_user }}/{{ conf_dir }}"
+      state: link
+    changed_when: no
+    tags: [ 'deploy' ]
+
+  - name: unlink existing default opensim binaries
+    file: path="/home/{{ admin_user}}/opensim" state=absent
+    changed_when: no
+    tags: [ 'deploy' ]
+
+  - name: link to opensim binaries
+    become: yes
+    become_user: "{{ admin_user}} "
+    file:
+      src: "/home/{{ admin_user}}/{{ host_version }}"
+      dest: "/home/{{ admin_user }}/opensim"
+      state: link
+    changed_when: no
+    tags: [ 'deploy' ]
+
+  - name: add opensim bin folder to path
+    lineinfile:
+      path: "/home/{{ admin_user}}/.bashrc"
+      state: present
+      regexp: 'export PATH=\$PATH:\$HOME\/opensim\/bin'
+      line: 'export PATH=$PATH:$HOME/opensim/bin'
+    tags: [ 'deploy' ]
+
+  - name: configure storage provider (login info)
+    lineinfile:
+      path: "/home/{{ admin_user}}/{{ conf_dir}}/robust-include/DataStorage-Provider.ini"
+      state: present
+      regexp: 'DB_Name ='
+      line: '        DB_Name = "{{ db_name }}"'
+    tags: [ 'DatabaseService' ]
+
+  - name: configure storage provider (user info)
+    lineinfile:
+      path: "/home/{{ admin_user}}/{{ conf_dir}}/robust-include/DataStorage-Provider.ini"
+      state: present
+      regexp: 'DB_User ='
+      line: '        DB_User = "{{ db_user}}"'
+    tags: [ 'DatabaseService' ]
+
+  - name: configure storage provider ( password info)
+    lineinfile:
+      path: "/home/{{ admin_user}}/{{ conf_dir}}/robust-include/DataStorage-Provider.ini"
+      state: present
+      regexp: 'DB_Password ='
+      line: '        DB_Password = "{{ vault_db_password }}"'
+    tags: [ 'DatabaseService' ]

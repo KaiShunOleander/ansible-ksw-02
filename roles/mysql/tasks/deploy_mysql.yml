@@ -1,0 +1,25 @@
+---
+- name: install mysql
+  apt: name=mysql-server state=present
+  tags: [ 'packages' ]
+
+- name: ensure mysql listening to any system
+  lineinfile: dest=/etc/mysql/mysql.conf.d/mysqld.cnf regexp=^bind-address line="bind-address = 0.0.0.0"
+  notify: restart mysql
+  tags: [ 'configure' ]
+
+- name: install python mysql package
+  apt: name=python-mysqldb state=present
+  tags: [ 'packages' ]
+
+- name: Remove anonymous database users
+  mysql_user: name='' host_all=yes state=absent
+  tags: [ 'configure' ]
+
+- name: Create the databases
+  mysql_db: name={{db_name}} state=present
+  tags: [ 'configure' ]
+
+- name: Create the database admin users
+  mysql_user: name={{db_user}} password={{db_password}} priv='{{db_name}}.*:ALL' state=present
+  tags: [ 'configure' ]

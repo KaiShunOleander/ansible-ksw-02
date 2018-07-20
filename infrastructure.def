@@ -1,0 +1,30 @@
+# Add your hosts here
+
+# The host that controls the remotes
+[control]
+control ansible_connection=local
+
+[robust]
+os-login
+os-asset
+
+[storage]
+os-asset
+os-region
+
+[simulator]
+os-region
+
+
+[opensim:children]
+robust
+simulator
+
+[grid_services]
+os-login
+
+[asset_service]
+os-asset
+
+[inventory_service]
+os-asset

@@ -1,0 +1,5 @@
+---
+
+git_src: https://github.com/nebadon2025/opensimulator
+git_bin: "https://github.com/KaiShunOleander/{{ host_version}}"
+git_cnf: "https://github.com/KaiShunOleander/os-config"
