@@ -1,11 +1,12 @@
 # ansible-ksw-01
-## Status: alpha ( not finished )
+## Status: :bangbang: alpha ( not finished )
 
 
 Title : Ansible playbooks to generate a 3 server grid
 =====================================================
 
 These playbooks will install and manage a three server opensimulator grid.
+
 Servers:
   1) the grid server running the robust login service and the grid services
   2) the asset server, running the robust asset and inventory services
