@@ -1,7 +1,7 @@
-Role Name
-=========
+Role Control
+============
 
-A brief description of the role goes here.
+Control installs and configures all packages needed on the control host. 
 
 Requirements
 ------------

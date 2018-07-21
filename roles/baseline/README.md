@@ -1,7 +1,7 @@
-Role Name
-=========
+Role Baseline
+=============
 
-A brief description of the role goes here.
+Baseline installs and configures all packages common to all opensimulator servers
 
 Requirements
 ------------
