@@ -75,26 +75,27 @@
       line: 'export PATH=$PATH:$HOME/opensim/bin'
     tags: [ 'deploy' ]
 
+
   - name: configure storage provider (login info)
-    lineinfile:
-      path: "/home/{{ admin_user}}/{{ conf_dir}}/robust-include/DataStorage-Provider.ini"
-      state: present
-      regexp: 'DB_Name ='
-      line: '        DB_Name = "{{ db_name }}"'
+    ini_file:
+      path: '{{ storage_provider }}'
+      section: Const
+      option: DB_Name
+      value: '"{{ db_name}}"'
     tags: [ 'DatabaseService' ]
 
   - name: configure storage provider (user info)
-    lineinfile:
-      path: "/home/{{ admin_user}}/{{ conf_dir}}/robust-include/DataStorage-Provider.ini"
-      state: present
-      regexp: 'DB_User ='
-      line: '        DB_User = "{{ db_user}}"'
+    ini_file:
+      path: '{{ storage_provider }}'
+      section: Const
+      option: DB_User
+      value: '"{{ db_user }}"'
     tags: [ 'DatabaseService' ]
 
   - name: configure storage provider ( password info)
-    lineinfile:
-      path: "/home/{{ admin_user}}/{{ conf_dir}}/robust-include/DataStorage-Provider.ini"
-      state: present
-      regexp: 'DB_Password ='
-      line: '        DB_Password = "{{ vault_db_password }}"'
+    ini_file:
+      path: '{{ storage_provider }}'
+      section: Const
+      option: DB_Password
+      value: '"{{ vault_db_password }}"'
     tags: [ 'DatabaseService' ]
