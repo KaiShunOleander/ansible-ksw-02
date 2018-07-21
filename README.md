@@ -33,7 +33,6 @@ Configuration
   vault for each group or define the vault_db_password variable in the groups_var
   file with the other variables.
 
-
   Roles
   ------
 - control  : install optional tools for the control host
@@ -49,15 +48,15 @@ Playbook tags
 
 Playbooks
 ----------
-site.yml    : runs the complete installation
-control.yml : configures the control system
-storage.yml : configures the storage providers
-opensim.yml : configures group specefic opensimulator services
-grid.yml    : configures opensimulator host specific services
+- site.yml    : runs the complete installation
+- control.yml : configures the control system
+- storage.yml : configures the storage providers
+- opensim.yml : configures group specefic opensimulator services
+- grid.yml    : configures opensimulator host specific services
 
 playbooks/
-  stack_status.yml  : shows service status of all services in the opensim stack
-  stack_restart.yml : executes a controlled restart of the opensim stack
+-  stack_status.yml  : shows service status of all services in the opensim stack
+-  stack_restart.yml : executes a controlled restart of the opensim stack
 
 License
 -------
