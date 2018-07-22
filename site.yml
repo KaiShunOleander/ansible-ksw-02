@@ -1,7 +1,7 @@
 ---
 # KaiShunWorldz grid conf01 files
 # Date : July 20, 2018
-  
+
 - hosts: all
   become: yes
   gather_facts: no
@@ -14,3 +14,4 @@
 - include: opensim.yml
 - include: storage.yml
 - include: grid.yml
+- include: asset.yml

@@ -2,6 +2,6 @@
   # Database storage is provided by mysql
   - hosts: storage
     become: yes
-    gather_facts: no
+    gather_facts: yes
     roles:
       - mysql

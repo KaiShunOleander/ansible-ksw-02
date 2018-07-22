@@ -1,0 +1,25 @@
+---
+# tasks file for grid_services
+  - name: configure welcome message
+    ini_file:
+      path: '{{ grid_config }}'
+      section: LoginService
+      option: WelcomeMessage
+      value: '"{{ WelcomeMessage }}"'
+    tags: [ 'LoginService','configure' ]
+
+  - name: configure gridname
+    ini_file:
+      path: '{{ grid_config }}'
+      section: GridInfoService
+      option: gridname
+      value: '"{{ gridname }}"'
+    tags: [ 'GridInfoService','configure' ]
+
+  - name: configure gridnick
+    ini_file:
+      path: '{{ grid_config }}'
+      section: GridInfoService
+      option: gridnick
+      value: '"{{ gridnick }}"'
+    tags: [ 'GridInfoService','configure' ]

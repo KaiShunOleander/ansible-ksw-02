@@ -1,5 +1,5 @@
 ---
-- hosts: storage
+- hosts: asset_database
   become: yes
   gather_facts: no
   tasks:

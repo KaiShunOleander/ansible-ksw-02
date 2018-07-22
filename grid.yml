@@ -1,28 +1,7 @@
 ---
   - hosts: grid_services
-    gather_facts: no
     become: yes
-    tasks:
-      - name: configure welcome message
-        lineinfile:
-          path: "/home/{{ admin_user}}/{{ conf_dir}}/Robust.login.ini"
-          state: present
-          regexp: 'WelcomeMessage ='
-          line: '        WelcomeMessage = "{{ WelcomeMessage }}"'
-        tags: [ 'LoginService' ]
-
-      - name: configure gridname
-        lineinfile:
-          path: "/home/{{ admin_user}}/{{ conf_dir}}/Robust.login.ini"
-          state: present
-          regexp: 'gridname ='
-          line: '        gridname = "{{ gridname }}"'
-        tags: [ 'GridInfoService' ]
-
-      - name: configure gridnick
-        lineinfile:
-          path: "/home/{{ admin_user}}/{{ conf_dir}}/Robust.login.ini"
-          state: present
-          regexp: 'gridnick ='
-          line: '        gridnick = "{{ gridnick }}"'
-        tags: [ 'GridInfoService' ]        
+    gather_facts: no
+    roles:
+      - mysql_client
+      - grid_services

@@ -6,7 +6,7 @@
 - name: ensure mysql listening to any system
   lineinfile: dest=/etc/mysql/mysql.conf.d/mysqld.cnf regexp=^bind-address line="bind-address = 0.0.0.0"
   notify: restart mysql
-  tags: [ 'configure' ]
+  tags: [ 'authorize','configure' ]
 
 - name: install python mysql package
   apt: name=python-mysqldb state=present
@@ -17,9 +17,16 @@
   tags: [ 'configure' ]
 
 - name: Create the databases
-  mysql_db: name={{db_name}} state=present
+  mysql_db: name="{{db_name}}" state=present
   tags: [ 'configure' ]
 
 - name: Create the database admin users
-  mysql_user: name={{db_user}} password={{db_password}} priv='{{db_name}}.*:ALL' state=present
+  mysql_user: name="{{db_user}}" password="{{db_password}}"  state=present
   tags: [ 'configure' ]
+
+- name: grant privileges from when connected from other hosts
+  mysql_user: name="{{db_user}}" priv='{{db_name}}.*:ALL' host="{{item}}" host_all=yes
+  tags: [ 'authorize','configure']
+  with_items:
+    - localhost
+    - "{{ ansible_hostname }}"

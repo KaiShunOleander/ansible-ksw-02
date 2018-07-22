@@ -1,0 +1,31 @@
+---
+# tasks file for simulator
+  - name: set the configure directory for the regions add-in's
+    ini_file:
+      path: "/home/{{ admin_user}}/{{ conf_dir}}/OpenSim.ini"
+      section: Startup
+      option: ConfigDirectory
+      value: '"/home/{{ admin_user}}/{{ conf_dir}}"'
+    tags: [ 'Simulator' ]
+
+  - name: set the configure directory for the regions
+    ini_file:
+      path: "/home/{{ admin_user}}/{{ conf_dir}}/OpenSim.ini"
+      section: Const
+      option: AdministratorFolder
+      value: '"/home/{{ admin_user}}"'
+    tags: [ 'Simulator' ]
+
+  - name:  set welcome regionUUID (1)
+    command: uuidgen
+    register: region_uuid
+    changed_when: no
+
+  - name: set welcome regionUUID   (2)
+    ini_file:
+      path: "/home/{{ admin_user}}/{{ conf_dir}}/Regions/Regions.ini"
+      section: Welcome
+      option: RegionUUID
+      value: '{{ region_uuid.stdout}}'
+    changed_when: no
+    tags: [ 'Simulator' ]

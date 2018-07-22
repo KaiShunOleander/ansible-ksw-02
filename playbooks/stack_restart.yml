@@ -2,7 +2,7 @@
 # bring stack down
 
 # restart mysql
-- hosts: database
+- hosts: asset_database
   become: yes
   gather_facts : no
   tasks:

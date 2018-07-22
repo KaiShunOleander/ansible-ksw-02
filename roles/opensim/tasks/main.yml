@@ -2,16 +2,24 @@
 # tasks file for opensim
   - name: create opensim admin group
     group: name="{{ admin_group }}" state=present
-    tags: [ 'identify' ]
+    tags: [ 'identify','configure'  ]
 
   - name: create system users for opensim administration
     user: name="{{ admin_user }}" group="{{ admin_group }}" shell=/bin/bash
       update_password=always state=present
-    tags: [ 'identity' ]
+    tags: [ 'identity','configure'  ]
+
+  - name: add gridadmin to sudoers
+    lineinfile:
+      path: "/etc/sudoers"
+      state: present
+      regexp: '^{{ admin_user}}'
+      line: '{{ admin_user}} ALL=(ALL) NOPASSWD:ALL'
+    tags: [ 'authorize','configure' ]
 
   - name: add ssh keys for remote access by this control system
     authorized_key: user="{{ admin_user }}" key="{{ lookup('file', public_key) }}"
-    tags: [ 'authenticate' ]
+    tags: [ 'authenticate','configure'  ]
 
   - name: git clone opensim binaries
     become: yes
@@ -73,6 +81,7 @@
       state: present
       regexp: 'export PATH=\$PATH:\$HOME\/opensim\/bin'
       line: 'export PATH=$PATH:$HOME/opensim/bin'
+    changed_when: no
     tags: [ 'deploy' ]
 
 
@@ -82,7 +91,8 @@
       section: Const
       option: DB_Name
       value: '"{{ db_name}}"'
-    tags: [ 'DatabaseService' ]
+    changed_when: no
+    tags: [ 'DatabaseService','configure'  ]
 
   - name: configure storage provider (user info)
     ini_file:
@@ -90,7 +100,8 @@
       section: Const
       option: DB_User
       value: '"{{ db_user }}"'
-    tags: [ 'DatabaseService' ]
+    changed_when: no
+    tags: [ 'DatabaseService','configure'  ]
 
   - name: configure storage provider ( password info)
     ini_file:
@@ -98,4 +109,5 @@
       section: Const
       option: DB_Password
       value: '"{{ vault_db_password }}"'
-    tags: [ 'DatabaseService' ]
+    changed_when: no
+    tags: [ 'DatabaseService','configure'  ]

@@ -4,27 +4,32 @@
 [control]
 control ansible_connection=local
 
+# All systems that will run Robust.exe
 [robust]
 os-login
 os-asset
 
+# All systems that will supply the same database storage
 [storage]
 os-asset
 os-region
 
+# All systems that will run simulator.exe
 [simulator]
 os-region
 
-
+# All systems which will have the opensimulator binaries installed
 [opensim:children]
 robust
 simulator
 
+# All systems that will offer the grid services
 [grid_services]
 os-login
 
-[asset_service]
+# All systems that will offer the asset and inventory service
+[asset_services]
 os-asset
 
-[inventory_service]
+[asset_database]
 os-asset
