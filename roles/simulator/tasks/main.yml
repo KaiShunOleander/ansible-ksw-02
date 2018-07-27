@@ -1,31 +1,55 @@
 ---
 # tasks file for simulator
-  - name: set the configure directory for the regions add-in's
-    ini_file:
-      path: "/home/{{ admin_user}}/{{ conf_dir}}/OpenSim.ini"
-      section: Startup
-      option: ConfigDirectory
-      value: '"/home/{{ admin_user}}/{{ conf_dir}}"'
-    tags: [ 'Simulator' ]
 
-  - name: set the configure directory for the regions
-    ini_file:
-      path: "/home/{{ admin_user}}/{{ conf_dir}}/OpenSim.ini"
-      section: Const
-      option: AdministratorFolder
-      value: '"/home/{{ admin_user}}"'
-    tags: [ 'Simulator' ]
+- include: os_services.yml
 
-  - name:  set welcome regionUUID (1)
-    command: uuidgen
-    register: region_uuid
-    changed_when: no
 
-  - name: set welcome regionUUID   (2)
-    ini_file:
-      path: "/home/{{ admin_user}}/{{ conf_dir}}/Regions/Regions.ini"
-      section: Welcome
-      option: RegionUUID
-      value: '{{ region_uuid.stdout}}'
-    changed_when: no
-    tags: [ 'Simulator' ]
+- name: configure path to data storage provider
+  ini_file:
+      path: '{{ robust_config }}'
+      section: DatabaseService
+      option: Include-Storage
+      value: '"{{ storage_provider}}"'
+  changed_when: no
+  tags: [ 'simulator', 'database_service','configure' ]
+
+
+
+- name: set the path to the Administrator folder
+  ini_file:
+    path: "/home/{{ admin_user}}/{{ conf_dir}}/OpenSim.ini"
+    section: Const
+    option: AdministratorFolder
+    value: '"/home/{{ admin_user}}"'
+  tags: [ 'simulator', 'configuration' ]
+
+- name: set the configure directory for the regions add-in's
+  ini_file:
+    path: "/home/{{ admin_user}}/{{ conf_dir}}/OpenSim.ini"
+    section: Startup
+    option: ConfigDirectory
+    value: '"/home/{{ admin_user}}/{{ conf_dir}}"'
+  tags: [ 'simulator','configure']
+
+- name: set the configure directory for the regions
+  ini_file:
+    path: "/home/{{ admin_user}}/{{ conf_dir}}/OpenSim.ini"
+    section: Const
+    option: AdministratorFolder
+    value: '"/home/{{ admin_user}}"'
+  tags: [ 'simulator','configure' ]
+
+- name:  set welcome regionUUID (1)
+  command: uuidgen
+  register: region_uuid
+  changed_when: no
+  tags: [  'simulator', 'configure']
+
+- name: set welcome regionUUID   (2)
+  ini_file:
+    path: "/home/{{ admin_user}}/{{ conf_dir}}/Regions/Regions.ini"
+    section: Welcome
+    option: RegionUUID
+    value: '{{ region_uuid.stdout}}'
+  changed_when: no
+  tags: [ 'simulator', 'configure']

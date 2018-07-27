@@ -1,7 +1,6 @@
 ---
   - hosts: grid_services
     become: yes
-    gather_facts: no
+    gather_facts: yes
     roles:
-      - mysql_client
       - grid_services

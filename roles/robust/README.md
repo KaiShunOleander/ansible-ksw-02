@@ -1,19 +1,22 @@
-Role simulator
-=========
+Role robust
+===========
 
-The simulator role configures the regions servers with the correct ini files
+The robust role configures the path of the storage provider in the correct
+Robust.ini file
 
 Requirements
 ------------
 
 
+
 Role Variables
 --------------
-robust_confg: the name and path to the inifile which will include the
-              storage provider.
+
+
 
 Dependencies
 ------------
+
 
 
 Example Playbook

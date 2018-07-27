@@ -9,10 +9,6 @@ control ansible_connection=local
 os-login
 os-asset
 
-# All systems that will supply the same database storage
-[storage]
-os-asset
-os-region
 
 # All systems that will run simulator.exe
 [simulator]

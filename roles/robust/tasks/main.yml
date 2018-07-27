@@ -1,0 +1,10 @@
+---
+# tasks file for robust
+- name: configure path to data storage provider
+  ini_file:
+    path: '{{ robust_config }}'
+    section: DatabaseService
+    option: Include-Storage
+    value: '"{{ storage_provider}}"'
+  changed_when: no
+  tags: [ 'database_service','configure' ]

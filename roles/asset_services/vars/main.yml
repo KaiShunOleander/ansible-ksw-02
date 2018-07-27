@@ -1,5 +1,4 @@
 ---
 # vars file for asset_services
-asset_config: "/home/{{ admin_user}}/{{ conf_dir}}/Robust.asset.ini"
 
-storage_provider: "/home/{{ admin_user}}/{{ conf_dir}}/robust-include/DataStorage-Provider.ini"
+robust_config: "/home/{{ admin_user}}/{{ conf_dir}}/Robust.asset.ini"

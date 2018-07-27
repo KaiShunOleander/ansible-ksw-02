@@ -37,28 +37,44 @@ Configuration
 
   Roles
   ------
-- control  : install optional tools for the control host
-- baseline : installs and configures packages common for all Servers
-- mysql    : installs and configures mysql and the database as storage provider
-             for opensim
-- opensim  : install opensimulator from github and configures the opensimulator
-             ini files
+- control        : install optional tools for the control host
+- baseline       : installs and configures packages common for all Servers
+- mysql          : installs and configures mysql and the database as storage provider
+                 for opensim
+- opensim        : install opensimulator from github and configures the opensimulator
+                   ini files
+- robust         : sets up the storage privider for opensim
+- asset_services : configures teh asset service
+- grid_services  : configures all grid services
+- opensimulator  : configures the opensimulator             
 
 
 Playbook tags
 ----------------
+- packages     : upgrade / install needed packages
+- configure    : configure all installed packages and opensim
+- authorize    : only configure access authorizations
+- authenticate : only configure user account credentials
+
+- simulator          : configure the simulators
+- database_service   : configure the storage provider for openSim
+- grid_services      : configure the grid services
+- grid_login_service : configure login services for the grid
+- asset_service      : configure the asset service
 
 Playbooks
 ----------
-- site.yml    : runs the complete installation
-- control.yml : configures the control system
-- storage.yml : configures the storage providers
-- opensim.yml : configures group specefic opensimulator services
-- grid.yml    : configures opensimulator host specific services
+- site.yml      : runs the complete installation
+- control.yml   : configures the control system
+- storage.yml   : configures the storage providers
+- opensim.yml   : configures all servers with the common settings and software
+- asset.yml     : configures robust with the asset services
+- grid.yml      : configures robust with the grid services
+- simulator.yml : configures the simulators with the opensim services
 
-playbooks/
--  stack_status.yml  : shows service status of all services in the opensim stack
--  stack_restart.yml : executes a controlled restart of the opensim stack
+-playbooks/
+ -  stack_status.yml  : shows service status of all services in the opensim stack
+ -  stack_restart.yml : executes a controlled restart of the opensim stack
 
 License
 -------

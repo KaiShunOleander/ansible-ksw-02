@@ -1,6 +1,6 @@
 ---
-  # Database storage is provided by mysql
-  - hosts: storage
+  # Database storage is provided by mysql on each opensim server
+  - hosts: opensim
     become: yes
     gather_facts: yes
     roles:

@@ -3,8 +3,8 @@
   apt: name=mysql-server state=present
   tags: [ 'packages' ]
 
-- name: ensure mysql listening to any system
-  lineinfile: dest=/etc/mysql/mysql.conf.d/mysqld.cnf regexp=^bind-address line="bind-address = 0.0.0.0"
+- name: ensure mysql listening only to local host 
+  lineinfile: dest=/etc/mysql/mysql.conf.d/mysqld.cnf regexp=^bind-address line="bind-address = 127.0.0.1"
   notify: restart mysql
   tags: [ 'authorize','configure' ]
 

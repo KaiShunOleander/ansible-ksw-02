@@ -2,11 +2,12 @@
 # bring stack down
 
 # restart mysql
-- hosts: asset_database
+- hosts: opensim
   become: yes
   gather_facts : no
   tasks:
     - service: name=mysql state=restarted
       waitfor: port=3306 timeout=1
+      changed_when: no
 
 # bring stack up

@@ -15,3 +15,4 @@
 - include: storage.yml
 - include: grid.yml
 - include: asset.yml
+- include: simulator.yml
