@@ -1,46 +1,10 @@
 ---
 # tasks file for asset_services
-  - name: set the BaseURL of the Robust instance
-    ini_file:
-      path: '{{ robust_config }}'
-      section: Const
-      option: BaseURL
-      value: '"http:/{{ ansible_hostname}}"'
-    changed_when: no
-    tags: [ 'asset_service','configure' ]
-
-  - name: configure location of gridadmin folder
-    ini_file:
-      path: '{{ robust_config }}'
-      section: Const
-      option: GridAdministratorFolder
-      value: '"/home/{{admin_user}}/config-default"'
-    changed_when: no
-    tags: [ 'asset_service','configure' ]
-
-  - name: set path to modular ini files
-    ini_file:
-      path: '{{ robust_config }}'
-      section: Startup
-      option: ConfigDirectory
-      value: '"/home/{{admin_user}}/config-default/robust-include"'
-    changed_when: no
-    tags: [ 'asset_service','configure' ]
-
-  - name: configure fsasset base directory
-    ini_file:
-      path: '{{ robust_config }}'
-      section: AssetService
-      option: BaseDirectory
-      value: '"/home/{{ admin_user}}/fsassets/data"'
-    changed_when: no
-    tags: [ 'asset_service','configure' ]
-
-  - name: configure fasasset spool directory
-    ini_file:
-      path: '{{ robust_config }}'
-      section: AssetService
-      option: SpoolDirectory
-      value: '"/home/{{ admin_user}}/fsassets/tmp"'
-    changed_when: no
-    tags: [ 'asset_service','configure' ]
+- name: Copy Robust.ini file from template into opensim/bin directory.
+  template:
+    src: Robust.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}/Robust.asset.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: [ 'configure' ]

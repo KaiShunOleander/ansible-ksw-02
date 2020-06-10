@@ -1,53 +1,11 @@
 ---
 # tasks file for grid_services
-  - name: configure welcome message
-    ini_file:
-      path: '{{ robust_config }}'
-      section: LoginService
-      option: WelcomeMessage
-      value: '"{{ WelcomeMessage }}"'
-    tags: [ 'grid_login_service', 'robust', 'configure' ]
 
-  - name: configure gridname
-    ini_file:
-      path: '{{ robust_config }}'
-      section: GridInfoService
-      option: gridname
-      value: '"{{ gridname }}"'
-    tags: [ 'grid_info_service', 'robust', 'configure' ]
-
-  - name: configure gridnick
-    ini_file:
-      path: '{{ robust_config }}'
-      section: GridInfoService
-      option: gridnick
-      value: '"{{ gridnick }}"'
-    tags: [ 'grid_info_service','configure' ]
-
-
-  - name: set the BaseURL of the Robust instance
-    ini_file:
-      path: '{{ robust_config }}'
-      section: Const
-      option: BaseURL
-      value: '"http://{{ ansible_hostname}} "'
-    changed_when: no
-    tags: [ 'grid_service', 'robust', 'configure' ]
-
-  - name: configure location of gridadmin folder
-    ini_file:
-      path: '{{ robust_config }}'
-      section: Const
-      option: GridAdministratorFolder
-      value: '"/home/{{admin_user}}/config-default"'
-    changed_when: no
-    tags: [ 'grid_service','robust', 'configure' ]
-
-  - name: set path to modular ini files
-    ini_file:
-      path: '{{ robust_config }}'
-      section: Startup
-      option: ConfigDirectory
-      value: '"/home/{{admin_user}}/config-default/robust-include"'
-    changed_when: no
-    tags: [ 'grid_service', 'robust''configure' ]
+- name: Copy Robust.ini file from template into opensim/bin directory.
+  template:
+    src: Robust.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}/Robust.login.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: [ 'configure' ]

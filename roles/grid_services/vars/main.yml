@@ -1,4 +1,4 @@
 ---
 # vars file for grid_services
 
-grid_config: "/home/{{ admin_user}}/{{ conf_dir}}/Robust.login.ini"
+robust_config: "/home/{{ admin_user}}/{{ conf_dir}}/Robust.login.ini"

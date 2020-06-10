@@ -11,30 +11,8 @@
       key_file: "/home/{{ admin_user }}/.ssh/id_rsa"
     tags: [ 'deploy' ]
 
-  - name: git clone opensim configuration files
-    become: yes
-    become_user: "{{ admin_user }}"
-    git:
-      repo: "{{git_cnf}}"
-      dest: "/home/{{ admin_user }}/os-config"
-      version: master
-      force: yes
-      accept_hostkey: yes
-      key_file: "/home/{{ admin_user }}/.ssh/id_rsa"
-    tags: [ 'deploy' ]
-
-  - name: unlink existing default configuration folder
-    file: path="/home/{{ admin_user }}/{{ conf_dir }}" state=absent
-    changed_when: no
-    tags: [ 'deploy' ]
-
-  - name: activate configuration folder
-    become: yes
-    become_user: "{{ admin_user }}"
-    file:
-      src: "/home/{{ admin_user }}/os-config/{{ config_version }}"
-      dest: "/home/{{ admin_user }}/{{ conf_dir }}"
-      state: link
+  - name: Create configuration folders
+    file: path="/home/{{ admin_user }}/{{ conf_dir }}/config-include" state=directory
     changed_when: no
     tags: [ 'deploy' ]
 
@@ -60,4 +38,4 @@
       regexp: 'export PATH=\$PATH:\$HOME\/opensim\/bin'
       line: 'export PATH=$PATH:$HOME/opensim/bin'
     changed_when: no
-    tags: [ 'deploy' ]  
+    tags: [ 'deploy' ]

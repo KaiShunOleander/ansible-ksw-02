@@ -1,55 +1,92 @@
 ---
 # tasks file for simulator
 
-- include: os_services.yml
+- include_tasks: variables.yml
 
 
-- name: configure path to data storage provider
-  ini_file:
-      path: '{{ robust_config }}'
-      section: DatabaseService
-      option: Include-Storage
-      value: '"{{ storage_provider}}"'
+# Configute the simulator ini filesystes
+
+- name: Create region configuration folders
+  file:
+    path: "/home/{{ admin_user }}/{{ conf_dir }}/Regions"
+    state: directory
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
   changed_when: no
-  tags: [ 'simulator', 'database_service','configure' ]
+  tags: [ 'deploy' ]
 
+- name: Setup OpenSimDefaults.ini
+  template:
+    src: OpenSimDefaults.ini.j2
+    dest: "/home/{{ admin_user}}/opensim/bin/OpenSimDefaults.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: [ 'deploy' ]
 
+- name: Setup OpenSim.ini
+  template:
+    src: OpenSim.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}/OpenSim.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: [ 'deploy' ]
 
-- name: set the path to the Administrator folder
-  ini_file:
-    path: "/home/{{ admin_user}}/{{ conf_dir}}/OpenSim.ini"
-    section: Const
-    option: AdministratorFolder
-    value: '"/home/{{ admin_user}}"'
-  tags: [ 'simulator', 'configuration' ]
+- name: Setup Grid.ini file
+  template:
+    src: Grid.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}//config-include/Grid.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
 
-- name: set the configure directory for the regions add-in's
-  ini_file:
-    path: "/home/{{ admin_user}}/{{ conf_dir}}/OpenSim.ini"
-    section: Startup
-    option: ConfigDirectory
-    value: '"/home/{{ admin_user}}/{{ conf_dir}}"'
-  tags: [ 'simulator','configure']
+- name: Setup Gridypergrid.ini file
+  template:
+    src: Grid.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}//config-include/GridHypergrid.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
 
-- name: set the configure directory for the regions
-  ini_file:
-    path: "/home/{{ admin_user}}/{{ conf_dir}}/OpenSim.ini"
-    section: Const
-    option: AdministratorFolder
-    value: '"/home/{{ admin_user}}"'
-  tags: [ 'simulator','configure' ]
+- name: Setup GridCommon.ini file
+  template:
+    src: GridCommon.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}//config-include/GridCommon.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: [ 'deploy' ]
 
-- name:  set welcome regionUUID (1)
+- name: Setup FlotsamCache.ini
+  template:
+    src: FlotsamCache.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}//config-include/FlotsamCache.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: [ 'deploy' ]
+
+- name: Setup osslEnable.ini
+  template:
+    src: osslEnable.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}//config-include/osslEnable.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: [ 'deploy' ]
+
+- name:  Generate  regionUUID for Welcome Sim
   command: uuidgen
   register: region_uuid
   changed_when: no
-  tags: [  'simulator', 'configure']
+  tags: [  'simulator', 'configure' ]
 
-- name: set welcome regionUUID   (2)
-  ini_file:
-    path: "/home/{{ admin_user}}/{{ conf_dir}}/Regions/Regions.ini"
-    section: Welcome
-    option: RegionUUID
-    value: '{{ region_uuid.stdout}}'
-  changed_when: no
-  tags: [ 'simulator', 'configure']
+- name: Copy Regions.ini file from template into configuration directory.
+  template:
+    src: Regions.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}/Regions/Regions.ini"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  tags: [ 'simulator', 'configure' ]

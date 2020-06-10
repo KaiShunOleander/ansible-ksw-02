@@ -1,5 +1,5 @@
   - name: create opensim admin group
-    group: name="{{ admin_group }}" state=present
+    group: name={{ admin_group }} state=present
     tags: [ 'identify','configure'  ]
 
   - name: create system users for opensim administration

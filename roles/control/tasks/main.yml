@@ -4,4 +4,7 @@
   with_items:
     - curl
     - screen
+    - git
+    - vsftpd
+  notify: restart vsftpd
   tags: [ 'packages' ]

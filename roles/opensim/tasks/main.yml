@@ -7,6 +7,7 @@
 
 # get the opensim binaries and the opensim config ini files
 - include: setup_opensim_bin.yml
+  when: not ansible_nodename in groups['backup']
 
 # configure data storage provider in openmsimulator ini files
-- include: data_storage_provider.yml
+# - include: data_storage_provider.yml

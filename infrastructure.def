@@ -1,18 +1,18 @@
 # Add your hosts here
 
 # The host that controls the remotes
-[control]
+[controller]
 control ansible_connection=local
 
 # All systems that will run Robust.exe
 [robust]
-os-login
-os-asset
+os-login backup_port=9998
+os-asset backup_port=9999
 
 
 # All systems that will run simulator.exe
 [simulator]
-os-region
+os-region00 backup_port=9990
 
 # All systems which will have the opensimulator binaries installed
 [opensim:children]
@@ -29,3 +29,7 @@ os-asset
 
 [asset_database]
 os-asset
+
+
+[backup]
+os-backup

@@ -1,5 +1,5 @@
 ---
-- hosts: asset_database
+- hosts: robust
   become: yes
   gather_facts: no
   tasks:

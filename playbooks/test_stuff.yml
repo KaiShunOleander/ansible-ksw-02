@@ -1,0 +1,16 @@
+---
+  - hosts :
+      - opensim
+      - backup
+    become : yes
+    gather_facts : yes
+    tasks:
+
+# show all the hosts matching the pattern, ie all but the group www
+
+
+      - debug:
+          msg: "{{ groups['backup'] }}"
+        with_items:
+          - "{{ groups }}"
+        when: ansible_nodename in groups['backup']

@@ -1,10 +1,10 @@
 ---
 # tasks file for robust
-- name: configure path to data storage provider
-  ini_file:
-    path: '{{ robust_config }}'
-    section: DatabaseService
-    option: Include-Storage
-    value: '"{{ storage_provider}}"'
-  changed_when: no
-  tags: [ 'database_service','configure' ]
+- name: Copy Robust.ini file from template into opensim/bin directory.
+  template:
+    src: Robust.ini.j2
+    dest: "/home/{{ admin_user}}/{{ conf_dir }}/Robust.ini"
+    owner: {{ admin_user}}
+    group: root
+    mode: 0644
+    tags: [ 'deploy' ]
