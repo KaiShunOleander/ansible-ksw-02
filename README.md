@@ -3,7 +3,8 @@
 
 
 Title : Ansible playbooks to generate a 3 server grid plus backups
-=====================================================
+        Opensim 0.9.2 with MySQL 8.02
+==================================================================
 
 These playbooks will install and manage a three server opensimulator grid.
 
