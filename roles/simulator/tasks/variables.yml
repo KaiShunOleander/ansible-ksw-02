@@ -1,0 +1,18 @@
+---
+# Variable configuration.
+- name: Include Architecture-specific variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "vars/infra-{{ config_version }}.yml"
+      skip: true
+
+- name: Setup Voice
+  include_vars:
+    file: "vars/vivox.yml"
+  when: vivox == true
+
+- name: Setup remote admin access
+  include_vars:
+    file: "vars/remote_access.yml"
+  when: remote_admin_access == true

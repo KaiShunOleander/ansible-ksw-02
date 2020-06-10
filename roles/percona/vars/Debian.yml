@@ -1,0 +1,7 @@
+---
+__percona_packages:
+    - libio-socket-ssl-perl
+    - libcurl4-openssl-dev
+    - libev4
+    - percona-toolkit
+    - percona-xtrabackup-80

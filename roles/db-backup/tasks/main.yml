@@ -1,0 +1,35 @@
+---
+# tasks file for db-backup
+
+- name: Schedule daily full database backups
+  cron:
+    name: "Stream Full Databse Backup"
+    cron_file: "/etc/crontab"
+    job: "sudo xtrabackup --backup --compressed --stream=xbstream  | nc os-backup {{ backup_port }}"
+    weekday: "*"
+    hour: "2"
+    minute: "3"
+    user: "{{ admin_user }}"
+  when: not ansible_nodename  ==  db_backup_node
+
+- name: Create backup folders
+  file:
+    path: /var/backups/{{ item }}
+    state: directory
+    mode: 0644
+  with_items:
+    - "{{ groups['robust'] }}"
+  when: ansible_nodename == db_backup_node
+
+- name: Schedule receptiom of daily full database backups on the backup system
+  cron:
+    name: "Receive full database backup from system {{ item }}"
+    cron_file: "/etc/crontab"
+    job: "sudo nc -l {{ hostvars[item]['backup_port'] }} | sudo xbstream -xv -C /var/backups/{{ item }}"
+    weekday: "*"
+    hour: "2"
+    minute: "3"
+    user: "ansible"
+  with_items:
+    - "{{ groups['robust'] }}"
+  when: ansible_nodename ==  db_backup_node

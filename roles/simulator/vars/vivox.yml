@@ -1,0 +1,5 @@
+---
+vivox_server: www.osp.vivox.come
+vivox_sip_uri: osp.vivix.come
+vivox_admin_user: "{{ vault_vivox_user }}"
+vivox_admin_password: "{{ vault_vivox_password }}"

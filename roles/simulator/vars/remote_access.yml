@@ -1,0 +1,4 @@
+---
+access_password: "{{ vault_remote_admin_password }}"
+remote_controllers: "192.168.2.18"
+remote_admin_port: "8167"

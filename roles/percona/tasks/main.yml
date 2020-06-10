@@ -1,0 +1,13 @@
+---
+# Variable configuration.
+- include_tasks: variables.yml
+
+# tasks file for Percona
+- include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Check if Percoana packages were installed.
+  set_fact:
+    percona_install_packages: "{{ (rh_percona_install_packages is defined and rh_percona_install_packages.changed)
+      or (deb_percona_install_packages is defined and deb_percona_install_packages.changed)
+      or (arch_percona_install_packages is defined and arch_percona_install_packages.changed) }}"

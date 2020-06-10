@@ -1,0 +1,40 @@
+---
+- name: Check if Percona toolkit is already installed.
+  stat: path=/etc/percona-toolkit
+  register: percona_toolkit_installed
+
+
+- name: Download Percona toolkit if not installed
+  apt:
+    deb: https://www.percona.com/downloads/percona-toolkit/3.2.0/binary/debian/focal/x86_64/percona-toolkit_3.2.0-1.focal_amd64.deb
+  when: not percona_toolkit_installed.stat.exists
+
+- name: Check if Percona xtrabackup is already installed.
+  stat: path=/usr/bin/xtrabackup
+  register: percona_xtrabackup_installed
+
+- name: Download Percona xtrabackup if not installed
+  apt:
+    deb: https://www.percona.com/downloads/Percona-XtraBackup-LATEST/Percona-XtraBackup-8.0.12/binary/debian/focal/x86_64/percona-xtrabackup-80_8.0.12-1.focal_amd64.deb
+  when: not percona_xtrabackup_installed.stat.exists
+
+- name: Update apt cache if Percona Tools are not yet installed.
+  apt: update_cache=yes
+  when: not percona_toolkit_installed.stat.exists or not percona_xtrabackup_installed.stat.exists
+
+# qpress is needed to uncompress compressed database backups
+- name: Check if qpress is installed
+  stat: path=/usr/bin/qpress
+  register: qpress_installed
+
+- name: Download qpress
+  unarchive:
+    src: http://www.quicklz.com/qpress-11-linux-x64.tar
+    dest: /usr/bin
+    remote_src: yes
+  when: not qpress_installed.stat.exists
+
+- name: Ensure Percona packages are installed.
+  apt:
+    name: "{{ percona_packages }}"
+  register: deb_percona_install_packages

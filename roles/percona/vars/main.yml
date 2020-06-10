@@ -1,0 +1,13 @@
+---
+hosts:
+  os-asset:
+    vars:
+      backup_port: 9999
+
+  os-login:
+    vars:
+      backup_port: 9998
+
+  os-region00:
+    vars:
+      backup_port: 9990
