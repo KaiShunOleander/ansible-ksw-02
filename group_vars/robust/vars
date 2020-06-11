@@ -1,5 +1,4 @@
 ---
-admin_user: gridadmin
 conf_dir: config-default
 
 storage_provider: "/home/{{ admin_user}}/{{ conf_dir}}/robust-include/DataStorage-Provider.ini"
