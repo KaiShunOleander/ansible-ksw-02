@@ -27,6 +27,8 @@
 
 
 # Renote access include file should contain
+# remote_controllers: "ipaddess"
+# remote_admin_port: "port"
 # access_password: "{{ vault_remote_admin_password }}"
 # if you use a vault or
 # access_password: "YourRemoteAdminPassword"
@@ -34,9 +36,6 @@
 # you will use for accessing the remote admin console
 
 - name: Setup remote admin access
-  vars:
-    remote_controllers: "192.168.2.18"
-    remote_admin_port: "8167"
   include_vars:
     file: "~/.vars/opensim/remote_access.yml"
   when: remote_admin_access == true
