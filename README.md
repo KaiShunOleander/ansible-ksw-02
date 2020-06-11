@@ -8,6 +8,8 @@ Title : Ansible playbooks to generate a 3 server grid plus backups
 
 These playbooks will install and manage a three server opensimulator grid.
 
+( This is my first ansible project. Still learning.)
+
 Servers:
   1) the grid server running the robust login service and the grid services
   2) the asset server, running the robust asset and inventory services
@@ -17,15 +19,22 @@ Servers:
 Requirements
 ------------
 
-- This setup requires three Ubuntu servers with a minimal of 2 cpu's each
-  and 4 Gb memory. The name of these servers are listed in the
-  `infrastructure.cnf` file.
+- This setup requires three Ubuntu servers. The name of these servers are listed
+  in the `infrastructure.cnf` file. The following setup has been used for this
+  configuration making use of Oracle VirtualBox.
+  - os-asset , 2 core, 3 GB Mem, 120 GB disk
+  - os-login , 1 core, 1 GB Mem,  16 GB disk
+  - os-region, 1 core, 4 Gb Mem,  60 GB disk
+  - os-backup, 1 core, 1 Gb Mem, 100 GB disk
+
 - The servers need to have python installed, and `/usr/bin/phython3` available
 
 
 Configuration
 ------------
 - The grid is configured by setting the variables in `group_vars/all.yml`
+- You need to configure personal information such as usernames and passwords in
+  the folder ~/.vars/opensim/ ( See roles/simulator/tasks/variables.yml )
 - The asset server will run a mysql database. The database and the system
    account for the grid administrator are configured by setting the variables
    in `group_vars/robust/all.yml`
@@ -42,7 +51,7 @@ Configuration
 - control        : install optional tools for the control host
 - baseline       : installs and configures packages common for all Servers
 - mysql          : installs and configures mysql and the database as storage provider
-                   for opensim  ( based on playbooks of geerlingguy 
+                   for opensim  ( based on playbooks of geerlingguy
 - opensim        : install opensimulator from github and setup of system accounts
 - asset_services : configures the asset service and inventory service
 - grid_services  : configures all grid services
@@ -57,7 +66,6 @@ Playbook tags
 - configure    : configure all installed packages and opensim
 - authorize    : only configure access authorizations
 - authenticate : only configure user account credentials
-
 - simulator          : configure the simulators
 - database_service   : configure the storage provider for openSim
 - grid_services      : configure the grid services
@@ -68,14 +76,17 @@ Playbooks
 ----------
 - site.yml      : runs the complete installation
 - control.yml   : configures the control system
-- storage.yml   : configures the storage providers
+- baseline.yml  : installs common tools and mono
 - opensim.yml   : configures all servers with the common settings and software
+- storage.yml   : configures the storage provider mysql
+- percona.yml   : configures database backups
 - asset.yml     : configures robust with the asset services
 - grid.yml      : configures robust with the grid services
 - simulator.yml : configures the simulators with the opensim services
-- 
+
 
 -playbooks/
+ -  shows basic information of a node in the network
  -  stack_status.yml  : shows service status of all services in the opensim stack
  -  stack_restart.yml : executes a controlled restart of the opensim stack
 

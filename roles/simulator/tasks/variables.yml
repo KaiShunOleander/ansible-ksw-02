@@ -1,4 +1,10 @@
 ---
+
+# Private information is kept outside the ansible environment. It is kept
+# in the folder ~/.ansible/opensim in subject related yml files.
+# You need to create these files in order for the OpenSim playbooks to work.
+
+
 # Variable configuration.
 - name: Include Architecture-specific variables.
   include_vars: "{{ item }}"
@@ -7,12 +13,30 @@
         - "vars/infra-{{ config_version }}.yml"
       skip: true
 
+# Setup Vivox Voice
+# The include  file should contain the following variabble
+# vivox_server: www.osp.vivox.com
+# vivox_sip_uri: osp.vivox.com
+# vivox_admin_user: "YourVivoxUserName"
+# vivox_admin_password: "YourVivoxPassword"
+
 - name: Setup Voice
   include_vars:
-    file: "vars/vivox.yml"
+    file: "~/.vars/opensim/vivox.yml"
   when: vivox == true
 
+
+# Renote access include file should contain
+# access_password: "{{ vault_remote_admin_password }}"
+# if you use a vault or
+# access_password: "YourRemoteAdminPassword"
+# This password will be configured in the simulator ini file as teh password
+# you will use for accessing the remote admin console
+
 - name: Setup remote admin access
+  vars:
+    remote_controllers: "192.168.2.18"
+    remote_admin_port: "8167"
   include_vars:
-    file: "vars/remote_access.yml"
+    file: "~/.vars/opensim/remote_access.yml"
   when: remote_admin_access == true
