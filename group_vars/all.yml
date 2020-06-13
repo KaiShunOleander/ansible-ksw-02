@@ -22,7 +22,7 @@
   WelcomeMessage: "Welcome, Spirit!!!"
 
 # gridinfo service
-  gridname: "My Own Ansible Generated Test Grid"
+  gridname: "Ansible Generated Test Grid"
   gridnick: "AnsibleTest"
   admin_group: opensim
   public_key: ~/.ssh/id_rsa.pub
@@ -33,8 +33,17 @@
 
 # enable/disbale remote administration of regions. Credentials should be set
 # in the similator vault
-  remote_admin_access: true
+  remote_admin_access: false
 
 
-# Voice , user credentials should be in group_vars/simulator/vault
+# Voice , user credentials should be in ~/.vars/opensim/vivox.yml
+#         Format of vivox.yml
+#         ---
+#         vivox_server: www.osp.vivox.com
+#         vivox_sip_uri: osp.vivox.com
+#         vivox_admin_user: "vivox-user"
+#         vivox_admin_password: "vivox-password"
+#
+#         To obtain a username and password send an email to opensim@vivox.com
+
   vivox: true

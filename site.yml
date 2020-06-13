@@ -13,7 +13,7 @@
 - include: baseline.yml
 - include: opensim.yml
 - include: storage.yml
-- include: percona.yml
+- include: db-backup.yml
 - include: grid.yml
 - include: asset.yml
 - include: simulator.yml

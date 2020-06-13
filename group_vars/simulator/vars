@@ -1,7 +1,6 @@
 ---
 admin_user: regionadmin
 conf_dir: conf-regions
-storage_provider: "/home/{{ admin_user}}/{{ conf_dir}}/robust-include/DataStorage-Provider.ini"
 
 db_name: simulator
 db_user: regionadmin
