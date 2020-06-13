@@ -1,0 +1,9 @@
+---
+  # Percona backup is provided for mysql on each opensim server
+  - hosts:
+      - robust
+      - backup
+    become: yes
+    gather_facts: yes
+    roles:
+      - db-backup
