@@ -1,6 +1,7 @@
 ---
 
-
+  ansible_python_interperter: /usr/bin/python3
+  
   host_version: os-ubuntu-2004
 
   admin_user: gridadmin

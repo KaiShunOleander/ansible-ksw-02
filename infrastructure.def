@@ -33,3 +33,6 @@ os-asset
 
 [backup]
 os-backup
+
+[webserver]
+nginx00

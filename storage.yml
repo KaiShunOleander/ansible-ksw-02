@@ -17,7 +17,13 @@
           host: localhost
           password: "{{ db_password }}"
           priv: "*.*:ALL"
-        
+    
+    pre_tasks:
+    - name: Set discovered Ansible Python interpreter.
+      set_fact:
+        ansible_python_interpreter: "{{ ansible_facts.python.executable }}"
+      when: ansible_python_interpreter is not defined
+    
     roles:
       - geerlingguy.mysql
-      - percona
+#      - percona
