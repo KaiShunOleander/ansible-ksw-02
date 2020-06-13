@@ -7,8 +7,8 @@
     cron_file: "/etc/crontab"
     job: "sudo xtrabackup --backup --compressed --stream=xbstream  | nc os-backup {{ backup_port }}"
     weekday: "*"
-    hour: "2"
-    minute: "3"
+    hour: "{{ backup_hour }}"
+    minute: "{{ backup_minute }}"
     user: "{{ admin_user }}"
   when: not ansible_nodename  ==  db_backup_node
 
@@ -27,8 +27,8 @@
     cron_file: "/etc/crontab"
     job: "sudo nc -l {{ hostvars[item]['backup_port'] }} | sudo xbstream -xv -C /var/backups/{{ item }}"
     weekday: "*"
-    hour: "2"
-    minute: "3"
+    hour: "{{ backup_hour }} "
+    minute: "{{ backup_minute }}"
     user: "ansible"
   with_items:
     - "{{ groups['robust'] }}"

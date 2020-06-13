@@ -3,7 +3,7 @@
 
 
 Title : Ansible playbooks to generate a 3 server grid plus backups
-        Opensim 0.9.2 with MySQL 8.02
+        Opensim 0.9.2 with MySQL 8.0.2
 ==================================================================
 
 These playbooks will install and manage a three server opensimulator grid.
@@ -35,6 +35,7 @@ Configuration
 - The grid is configured by setting the variables in `group_vars/all.yml`
 - You need to configure personal information such as usernames and passwords in
   the folder ~/.vars/opensim/ ( See roles/simulator/tasks/variables.yml )
+- Port numbers for database backups are configures in `infrastructure.def`
 - The asset server will run a mysql database. The database and the system
    account for the grid administrator are configured by setting the variables
    in `group_vars/robust/all.yml`
@@ -58,16 +59,16 @@ Configuration
 - asset_services : configures the asset service and inventory service
 - grid_services  : configures all grid services
 - opensimulator  : configures the opensimulator             
-- percona        : installs percona tools and percona xtyrabackup and qpress
-- db-backup      : schedules databases backups
+- percona        : installs percona tools and percona xtrabackup and qpress
+- db-backup      : schedules databases backups in `/etc/crontab`
 
 
 Playbook tags
 ----------------
-- packages     : upgrade / install needed packages
-- configure    : configure all installed packages and opensim
-- authorize    : only configure access authorizations
-- authenticate : only configure user account credentials
+- packages           : upgrade / install needed packages
+- configure          : configure all installed packages and opensim
+- authorize          : only configure access authorizations
+- authenticate       : only configure user account credentials
 - simulator          : configure the simulators
 - database_service   : configure the storage provider for openSim
 - grid_services      : configure the grid services
@@ -81,14 +82,14 @@ Playbooks
 - baseline.yml  : installs common tools and mono
 - opensim.yml   : configures all servers with the common settings and software
 - storage.yml   : configures the storage provider mysql
-- percona.yml   : configures database backups
-- asset.yml     : configures robust with the asset services
+- db-backup.yml : configures database backups
+- asset.yml     : configures robust with the asset and inventory services
 - grid.yml      : configures robust with the grid services
 - simulator.yml : configures the simulators with the opensim services
 
 
--playbooks/
- -  shows basic information of a node in the network
+- playbooks/
+ -  info.yml          : shows basic information of a node in the network
  -  stack_status.yml  : shows service status of all services in the opensim stack
  -  stack_restart.yml : executes a controlled restart of the opensim stack
 
