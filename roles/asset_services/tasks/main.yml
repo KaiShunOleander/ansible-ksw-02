@@ -7,4 +7,4 @@
     owner: "{{ admin_user }}"
     group: "{{ admin_group }}"
     mode: 0644
-  tags: [ 'configure' ]
+  tags: ['configure']

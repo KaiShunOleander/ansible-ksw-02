@@ -2,7 +2,7 @@
 # tasks file for baseline
 - name: Upgrade packages
   apt: upgrade=safe
-  tags: [ 'packages' ]
+  tags: ['packages']
 
 - name: Install baseline
   apt: name={{item}} state=present
@@ -10,4 +10,4 @@
     - ufw
     - git
     - mono-complete
-  tags: [ 'packages' ]
+  tags: ['packages']

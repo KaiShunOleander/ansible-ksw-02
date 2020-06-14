@@ -4,7 +4,7 @@
 - include_tasks: variables.yml
 
 
-# Configute the simulator ini filesystes
+# Configure the simulator ini files
 
 - name: Create region configuration folders
   file:
@@ -13,7 +13,7 @@
     owner: "{{ admin_user }}"
     group: "{{ admin_group }}"
   changed_when: no
-  tags: [ 'deploy' ]
+  tags: ['deploy']
 
 - name: Setup OpenSimDefaults.ini
   template:
@@ -22,7 +22,7 @@
     owner: "{{ admin_user }}"
     group: "{{ admin_group }}"
     mode: 0644
-  tags: [ 'deploy' ]
+  tags: ['deploy']
 
 - name: Setup OpenSim.ini
   template:
@@ -31,7 +31,7 @@
     owner: "{{ admin_user }}"
     group: "{{ admin_group }}"
     mode: 0644
-  tags: [ 'deploy' ]
+  tags: ['deploy']
 
 - name: Setup Grid.ini file
   template:
@@ -56,7 +56,7 @@
     owner: "{{ admin_user }}"
     group: "{{ admin_group }}"
     mode: 0644
-  tags: [ 'deploy' ]
+  tags: ['deploy']
 
 - name: Setup FlotsamCache.ini
   template:
@@ -65,7 +65,7 @@
     owner: "{{ admin_user }}"
     group: "{{ admin_group }}"
     mode: 0644
-  tags: [ 'deploy' ]
+  tags: ['deploy']
 
 - name: Setup osslEnable.ini
   template:
@@ -74,13 +74,13 @@
     owner: "{{ admin_user }}"
     group: "{{ admin_group }}"
     mode: 0644
-  tags: [ 'deploy' ]
+  tags: ['deploy']
 
-- name:  Generate  regionUUID for Welcome Sim
+- name: Generate  regionUUID for Welcome Sim
   command: uuidgen
   register: region_uuid
   changed_when: no
-  tags: [  'simulator', 'configure' ]
+  tags: ['simulator', 'configure']
 
 - name: Copy Regions.ini file from template into configuration directory.
   template:
@@ -89,4 +89,4 @@
     owner: "{{ admin_user }}"
     group: "{{ admin_group }}"
     mode: 0644
-  tags: [ 'simulator', 'configure' ]
+  tags: ['simulator', 'configure']

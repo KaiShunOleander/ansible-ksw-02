@@ -1,0 +1,20 @@
+---
+extends: default
+
+ignore: |
+  .travis.yml
+  roles/*/meta/main.yml
+
+rules:
+  line-length:
+    max: 132
+    level: warning
+  new-line-at-end-of-file:
+    ignore: |
+      *.yml
+  truthy:
+    allowed-values:
+      - 'true'
+      - 'false'
+      - 'yes'
+      - 'no'

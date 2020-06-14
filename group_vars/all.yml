@@ -1,39 +1,39 @@
 ---
 
-  ansible_python_interperter: /usr/bin/python3
-  
-  host_version: os-ubuntu-2004
+ansible_python_interperter: /usr/bin/python3
 
-  admin_user: gridadmin
-  
+host_version: os-ubuntu-2004
+
+admin_user: gridadmin
+
 # conf01 : One grid server, one asset server, one region server
-  config_version: "01"
+config_version: "01"
 
 # database
 
-  db_backup_node: "os-backup"
+db_backup_node: "os-backup"
 
 # Network
 
-  os_public_port: 8002
-  os_private_port: 8003
+os_public_port: 8002
+os_private_port: 8003
 
 # login service
-  WelcomeMessage: "Welcome, Spirit!!!"
+WelcomeMessage: "Welcome, Spirit!!!"
 
 # gridinfo service
-  gridname: "Ansible Generated Test Grid"
-  gridnick: "AnsibleTest"
-  admin_group: opensim
-  public_key: ~/.ssh/id_rsa.pub
+gridname: "Ansible Generated Test Grid"
+gridnick: "AnsibleTest"
+admin_group: opensim
+public_key: ~/.ssh/id_rsa.pub
 
 
 # gridmode is hypergrid of grid
-  gridmode: "grid"
+gridmode: "grid"
 
 # enable/disbale remote administration of regions. Credentials should be set
 # in the similator vault
-  remote_admin_access: false
+remote_admin_access: false
 
 
 # Voice , user credentials should be in ~/.vars/opensim/vivox.yml
@@ -46,4 +46,4 @@
 #
 #         To obtain a username and password send an email to opensim@vivox.com
 
-  vivox: true
+vivox: true

@@ -1,37 +1,35 @@
 ---
-  - hosts : grid_services
-    become : yes
-    gather_facts : yes
-    tasks:
+- hosts: grid_services
+  become: yes
+  gather_facts: yes
+  tasks:
+    - name: Gather Database Information
+      command: 'mysql --version'
+      register: mysql_cli_version
+      changed_when: false
+      check_mode: false
 
+    - name: Disk Free
+      shell: >
+          df / |
+          awk '{print $5}'
+      register: disk_free
+      changed_when: false
+      check_mode: false
 
-      - name: Gather Database Information
-        command: 'mysql --version'
-        register: mysql_cli_version
-        changed_when: false
-        check_mode: false
+    - name: System Information
+      debug:
+        msg: "{{ ansible_lsb.description }} : {{ ansible_processor[2] }}
+        : CPU({{ ansible_processor_cores }})
+        : MEM({{ ansible_memtotal_mb}})
+        : DISK({{ disk_free.stdout_lines[1] }})
+        : MySQL({{ mysql_cli_version.stdout[10:16] }})"
 
-      - name: Disk Free
-        shell: >
-            df / |
-            awk '{print $5}'
-        register: disk_free
-        changed_when: False
-        check_mode: False
+    - name: User Account information
+      command: >
+        mysql opensim -t -e 'select PrincipalID, FirstName, LasTName, UserLevel from UserAccounts;'
+      register: UserAccountService
 
-      - name: System Information
-        debug:
-          msg: "{{ ansible_lsb.description }} : {{ ansible_processor[2] }}
-          : CPU({{ ansible_processor_cores }})
-          : MEM({{ ansible_memtotal_mb}})
-          : DISK({{ disk_free.stdout_lines[1] }})
-          : MySQL({{ mysql_cli_version.stdout[10:16] }})"
-
-      - name: User Account information
-        command: >
-          mysql opensim -t -e 'select PrincipalID, FirstName, LasTName, UserLevel from UserAccounts;'
-        register: UserAccountService
-
-      - name: Avatar information
-        debug:
-          msg: "{{ UserAccountService.stdout_lines }}"
+    - name: Avatar information
+      debug:
+        msg: "{{ UserAccountService.stdout_lines }}"

@@ -7,4 +7,4 @@
     - git
     - vsftpd
   notify: restart vsftpd
-  tags: [ 'packages' ]
+  tags: ['packages']

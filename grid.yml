@@ -1,6 +1,6 @@
 ---
-  - hosts: grid_services
-    become: yes
-    gather_facts: yes
-    roles:
-      - grid_services
+- hosts: grid_services
+  become: yes
+  gather_facts: yes
+  roles:
+    - grid_services
