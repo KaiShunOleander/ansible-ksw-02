@@ -1,0 +1,39 @@
+---
+# Variable configuration.
+- name: define Docker distro
+  set_fact:
+    docker_distro: "{{ ansible_lsb['codename'] }}"
+  when: docker_distro is not defined
+
+- name: set architecture
+  set_fact:
+    os_architecture: "amd64"
+  when: ansible_architecture == "x86_64"
+
+- name: Designate the Docker distro
+  set_fact:
+    os_distro: "{{ ansible_distribution | lower }}"
+    os_system: "{{ ansible_system | lower }}"
+
+- name: map Linux Mint distributions to Ubuntu
+  block:
+
+  - name: map Mint focal versions
+    set_fact:
+      docker_distro: "focal"
+      os_distro: "ubuntu"
+    when: docker_distro in ['ulyana']
+
+  - name: map Mint bionic versions
+    set_fact:
+      docker_distro: "bionic"
+      os_distro: "ubuntu"
+    when: docker_distro in ['tricia', 'tina', 'tessa', 'tara']
+
+  - name: map Mint xenial versions
+    set_fact:
+      docker_distro: "xenial"
+      os_distro: "ubuntu"
+    when: docker_distro in ['sylvia', 'sonya', 'serena', 'sarah']
+  when: ansible_distribution == 'Linux Mint'
+  tags: ['packages']

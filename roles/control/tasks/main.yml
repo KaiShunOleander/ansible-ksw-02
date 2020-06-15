@@ -1,56 +1,6 @@
 ---
-- name: install helper tools
-  apt: name={{item}} state=present
-  with_items:
-    - curl
-    - screen
-    - git
-    - vsftpd
-  notify: restart vsftpd
-  tags: ['packages']
 
-- name: install testing tools
-  block:
-    - name: install lint tools
-      pip: 
-        name: "{{item}}" 
-        state: present
-        executable: /usr/bin/pip3
-      with_items:
-        - yamllint
-        - setuptools
-        - ansible-lint
+- include_tasks: variables.yml 
 
-    - name: install docker requirements
-      apt: name="{{item}}" state=present
-      with_items:
-        - apt-transport-https
-        - ca-certificates
-        - gnupg-agent
-        - software-properties-common
-
-    - name: add the docker key ring
-      shell: \
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-      register: keyring_result
-
-    - name: verify key ring
-      command: 'sudo apt-key fingerprint 0EBFCD88'
-      register: key_ring_verification
-
-    - name: add docker to packager
-      command: \
-        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-      when: ansible_lsb['codename'] == "tricia" or ansible_lsb['codename'] == "bionic"
-
-    - name: update apt cache
-      apt: update_cache=yes
-
-
-    - name: install docker ce 
-      apt: name="{{item}}" state=present
-      with_items:
-        - docker-ce
-        - docker-ce-cli
-        - containerd.io
-  tags: ['packages']
+- include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'

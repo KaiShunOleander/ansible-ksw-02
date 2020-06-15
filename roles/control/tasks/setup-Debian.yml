@@ -1,0 +1,68 @@
+---
+- name: install helper tools
+  apt: name={{item}} state=present
+  with_items:
+    - curl
+    - screen
+    - git
+    - vsftpd
+  notify: restart vsftpd
+  tags: ['packages']
+
+- name: install testing tools
+  block:
+    - name: install lint tools
+      pip:
+        name: "{{item}}"
+        state: present
+        executable: /usr/bin/pip3
+      with_items:
+        - yamllint
+        - setuptools
+        - ansible-lint
+
+    - name: install docker requirements
+      apt: name="{{item}}" state=present
+      with_items:
+        - apt-transport-https
+        - ca-certificates
+        - gnupg-agent
+        - software-properties-common
+
+    - name: add the docker key ring
+      shell: \
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+      register: keyring_result
+
+    - name: assert docker key ring has been received
+      assert: 
+        that:
+          - keyring_result.stdout.find('OK') != -1
+        fail_msg: "Unable to download docker key ring."
+
+    - name: verify key ring
+      command: 'sudo apt-key fingerprint 0EBFCD88'
+      register: key_ring_verification
+
+    - name: assert the docker key ring is valid
+      assert:
+        that:
+          key_ring_verification.stdout.find('docker') != -1
+        fail_msg: "Failed to add a valid docker key ring."
+
+    - name: add docker repository
+      command: \
+        sudo add-apt-repository "deb [arch={{ os_architecture }}] https://download.docker.com/{{ os_system }}/{{ os_distro }} {{ docker_distro }} stable"
+      register: docker_cli
+
+
+    - name: update apt cache
+      apt: update_cache=yes
+
+    - name: install docker ce
+      apt: name="{{item}}" state=present
+      with_items:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+  tags: ['packages']
