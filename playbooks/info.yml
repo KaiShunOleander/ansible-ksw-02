@@ -1,14 +1,9 @@
 ---
-- hosts: opensim
+- hosts: all
   become: yes
   gather_facts: yes
   tasks:
 
-    - name: Gather Database Information
-      command: 'mysql --version'
-      register: mysql_cli_version
-      changed_when: false
-      check_mode: false
 
     - name: Disk FreeSwitchVoice
       shell: >
@@ -23,5 +18,5 @@
         msg: "{{ ansible_lsb.description }} : {{ ansible_processor[2] }}
         : CPU({{ ansible_processor_cores }})
         : MEM({{ ansible_memtotal_mb}})
-        : DISK({{ disk_free.stdout_lines[1] }})
-        : MySQL({{ mysql_cli_version.stdout[10:16] }})"
+        : DISK({{ disk_free.stdout_lines[1] }})"
+ 
