@@ -5,9 +5,7 @@
   tags: ['packages']
 
 - name: Install baseline
-  apt: name={{item}} state=present
-  with_items:
-    - ufw
-    - git
-    - mono-complete
+  apt: 
+    name: ['ufw', 'git', 'mono-complete'] 
+    state: present
   tags: ['packages']
