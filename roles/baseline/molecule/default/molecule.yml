@@ -7,7 +7,7 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
-  - name: Testing Baseline
+  - name: Testing Baseline Role
     image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2004}-ansible:latest
     command: ""
     volumes:
