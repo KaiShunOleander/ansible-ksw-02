@@ -1,33 +1,26 @@
 ---
 - name: install helper tools
-  apt: name={{item}} state=present
-  with_items:
-    - curl
-    - screen
-    - git
-    - vsftpd
+  apt: 
+    name: ['curl', 'tree', 'screen', 'git', 'vsftpd', 'python3-pip', 'libssl-dev']
+    state: present
   notify: restart vsftpd
   tags: ['packages']
+
+- name: update apt cache for pip3
+  apt: update_cache=yes
 
 - name: install testing tools
   block:
     - name: install lint tools
       pip:
-        name: "{{item}}"
+        name: ['yamllint', 'setuptools', 'ansible-lint', 'molecule', 'docker-py']
         state: present
         executable: /usr/bin/pip3
-      with_items:
-        - yamllint
-        - setuptools
-        - ansible-lint
-
+  
     - name: install docker requirements
-      apt: name="{{item}}" state=present
-      with_items:
-        - apt-transport-https
-        - ca-certificates
-        - gnupg-agent
-        - software-properties-common
+      apt: 
+        name: ['apt-transport-https', 'ca-certificates', 'gnupg-agent', 'software-properties-common']
+        state: present
 
     - name: add the docker key ring
       shell: \
@@ -41,7 +34,8 @@
         fail_msg: "Unable to download docker key ring."
 
     - name: verify key ring
-      command: 'sudo apt-key fingerprint 0EBFCD88'
+      command: 'apt-key fingerprint 0EBFCD88'
+      become: yes
       register: key_ring_verification
 
     - name: assert the docker key ring is valid
@@ -56,13 +50,17 @@
       register: docker_cli
 
 
-    - name: update apt cache
+    - name: update apt cache for docker
       apt: update_cache=yes
 
     - name: install docker ce
-      apt: name="{{item}}" state=present
-      with_items:
-        - docker-ce
-        - docker-ce-cli
-        - containerd.io
+      apt: 
+        name: ['docker-ce', 'docker-ce-cli', 'containerd']
+        state: present
+    
+
+    - name: check if docker installed
+      stat: path=/usr/bin/docker
+      register: docker_installed
+
   tags: ['packages']

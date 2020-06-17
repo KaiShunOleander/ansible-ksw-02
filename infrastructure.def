@@ -2,7 +2,8 @@
 
 # The host that controls the remotes
 [controller]
-control ansible_connection=local
+#control ansible_connection=local
+orchestrator ansible_connection=local
 
 # All systems that will run Robust.exe
 [robust]

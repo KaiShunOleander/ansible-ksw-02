@@ -4,3 +4,16 @@
 
 - include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
+
+- name: add user to docker group
+  block:
+    - name: get the user name
+      set_fact:
+        user_name: "{{ lookup('env', 'USER') }}"
+      become: no
+
+    - name: "Adding : {{ user_name }}"
+      user: name="{{ user_name }}" groups="docker" append=yes state=present
+  when: docker_installed.stat.exists
+  tags: ['identity', 'configure']
+
