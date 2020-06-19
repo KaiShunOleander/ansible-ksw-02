@@ -18,4 +18,5 @@ To avoid having to type or paste inn this access token over and over you can:
    The credentials will be stored in `~/git-credentials` on the next time you enter your password token.
 
 :link: [Creating a personal access token for the command line](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+
 :link: [Using command-line git with GitHub 2FA](http://gmacario.github.io/2017/08/08/cmdline-git-with-github-2fa.html)
