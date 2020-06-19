@@ -5,7 +5,7 @@ Title: Issue History Ansible Opensim
 
 **Git**
 
-**git command line login credentials: **
+*git command line login credentials:* - 
 After setting up Two Factor Authentication (2FA) on gitgub the usual password won't work anymore. You have to generate an access token and use the token instead of the password.
 To avoid having to type or paste inn this access token over and over you can:
 -  cache your credentials for a number of seconds with the command:
@@ -23,4 +23,4 @@ To avoid having to type or paste inn this access token over and over you can:
 
 **Molecule**
 
-**Name of the test** is set in `molecule.yml` under platforms:. Molecule doesn'lt like spaces in the name, so use underscore.
+*Name of the test* is set in `molecule.yml` under platforms:. Molecule doesn'lt like spaces in the name, so use underscore.
