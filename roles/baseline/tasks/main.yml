@@ -1,11 +1,3 @@
 ---
-# tasks file for baseline
-- name: Upgrade packages
-  apt: upgrade=safe
-  tags: ['packages']
-
-- name: Install baseline
-  apt: 
-    name: ['ufw', 'git', 'mono-complete'] 
-    state: present
-  tags: ['packages']
+- include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
