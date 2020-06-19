@@ -7,7 +7,9 @@ Lesson's Learned creating Ansible Opensim
 
 *GitHub Workflows* - Molecule seems to need a playbook on a single system (localhost), so testing playbooks or roles which include different roles or target different systems seems an issue. Makes sense the workflow tests should be unit tests and not test all playbooks used to configure the opensim grid.
 
-Workflow are triggered on a commit on the repository. To target a single role for a unit test upon a git-commit means for now that each role will use a seperate github repository.
+A Workflow can be triggered on a commit on the repository. To target a single role for a unit test upon a git-commit means for now that each role will use a seperate github repository.
+
+:link: [GitHub action to run Molecule](https://robertdebock.nl/2019/12/20/github-action-to-run-molecule.html)
 
 *GitHub Projects* - Projects ( containing KanBan boards) can be linked to a repository, an github personal account or a organization. If you create an account, and filled a project connected to the account, and than decide to create an organization, there doesnt seem a way to transfer a project to the organization level, unless you create the organization promoting the personal account to a organization.
 
