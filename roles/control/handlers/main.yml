@@ -1,6 +1,4 @@
 ---
 # handlers file for control
 - name: restart vsftpd
-  service: name=vsftpd state=restarted sleep=5
-
-
+  service: name=vsftpd state=restarted
