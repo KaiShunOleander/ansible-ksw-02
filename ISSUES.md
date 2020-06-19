@@ -3,6 +3,14 @@
 Title: Issue History Ansible Opensim
 ====================================
 
+**GitHub**
+
+*GitHub Workflows* - Molecule seems to need a playbook on a single system (localhost), so testing playbooks or roles which include different roles or target different systems seems an issue. Makes sense the workflow tests should be unit tests and not test all playbooks used to configure the opensim grid.
+
+Workflow are triggered on a commit on the repository. To target a single role for a unit test upon a git-commit means for now that each role will use a seperate github repository.
+
+*GitHub Projects* - Projects ( containing KanBan boards) can be linked to a repository, an github personal account or a organization. If you create an account, and filled a project connected to the account, and than decide to create an organization, there doesnt seem a way to transfer a project to the organization level, unless you create the organization promoting the personal account to a organization.
+
 **Git**
 
 *git command line login credentials:* - 
@@ -13,7 +21,7 @@ To avoid having to type or paste inn this access token over and over you can:
    `$ git config --global credential.helper 'cache --timeout=7200'`
 -  store your cridentials by:
 
-   `git config credential.helper store`
+   `$ git config credential.helper store`
 
    The credentials will be stored in `~/git-credentials` on the next time you enter your password token.
 
