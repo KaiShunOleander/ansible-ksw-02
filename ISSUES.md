@@ -1,7 +1,7 @@
 
 
-Title: Lesson's Learned creating Ansible Opensim
-================================================
+Lesson's Learned creating Ansible Opensim
+=========================================
 
 **GitHub**
 
