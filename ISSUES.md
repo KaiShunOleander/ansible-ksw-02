@@ -9,9 +9,12 @@ __Git__
 After setting up Two Factor Authentication (2FA) on gitgub the usual password won't work anymore. You have to generate an access token and use the token instead of the password.
 To avoid having to type or paste inn this access token over and over you can:
 -  cache your credentials for a number of seconds with the command:
-   `git config --global credential.helper 'cache --timeout=7200'`
+
+   `$ git config --global credential.helper 'cache --timeout=7200'`
 -  store your cridentials by:
+
    `git config credential.helper store`
+
    The credentials will be stored in `~/git-credentials` on the next time you enter your password token.
 
 :link: [Creating a personal access token for the command line](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
