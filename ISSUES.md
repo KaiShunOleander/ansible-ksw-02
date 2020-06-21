@@ -5,14 +5,34 @@ Lesson's Learned creating Ansible Opensim
 
 **Ansibl**
 To create skeletons for roles, yaml files were used. When creating a role based on a skeleton the yaml files are replaced by target files, e.a. main.yml.j2 will be replaced by main.yml. Only the {{ role_name }} var;iable will be expanded. 
-If something like:
+If we like to generate the following code:
 ```YAML
-   - name: Ensure test2 is started and enabled at boot.
+   - name: Ensure nginx is started and enabled at boot.
   service:
-    name: test2
-    state: "{{ test2_service_state }}"
-    enabled: "{{ test2_service_enabled }}"
+    name: ngginx
+    state: "{{ nginx_service_state }}"
 ```
+
+then we can **can not** use the following jinja code
+
+```YAML
+- name: Ensure {[ role_name }} is started and enabled at boot.
+  service:
+    name: {{  role_name }}
+    state: "{{ {{ role_name }}_service_state }}"
+    enabled: "{{ {{ role_name }}_service_enabled }}"
+```
+
+The parser won't like this nesting and generates an error on the four curly brackets. we can escape the brackets however by using:
+
+```YAML
+- name: Ensure {{ role_name }} is started and enabled at boot.
+  service:
+    name: {{ role_name }}
+    state: {% raw %}"{{{% endraw %} {{ role_name }}_service_state {% raw %}}}"{% endraw %}
+    enabled: {% raw %}"{{{% endraw %} {{ role_name }}_service_enabled {% raw %}}}"{% endraw %}
+```
+
 **GitHub**
 
 *GitHub Workflows* - Molecule seems to need a playbook on a single system (localhost), so testing playbooks or roles which include different roles or target different systems seems an issue. Makes sense the workflow tests should be unit tests and not test all playbooks used to configure the opensim grid.
