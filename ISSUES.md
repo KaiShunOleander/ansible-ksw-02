@@ -34,6 +34,7 @@ The parser won't like this nesting and generates an error on the four curly brac
     enabled: {% raw %}"{{{% endraw %} {{ role_name }}_service_enabled {% raw %}}}"{% endraw %}
 ```
 
+:link: [Unsafe or Raw String](https://docs.ansible.com/ansible/latest/user_guide/playbooks_advanced_syntax.html#unsafe-or-raw-strings)
 **GitHub**
 
 *GitHub Workflows* - Molecule seems to need a playbook on a single system (localhost), so testing playbooks or roles which include different roles or target different systems seems an issue. Makes sense the workflow tests should be unit tests and not test all playbooks used to configure the opensim grid.
