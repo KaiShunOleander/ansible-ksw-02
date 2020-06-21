@@ -35,6 +35,7 @@ The parser won't like this nesting and generates an error on the four curly brac
 ```
 
 :link: [Using a custom role skeleton](https://docs.ansible.com/ansible/latest/galaxy/dev_guide.html#using-a-custom-role-skeleton)
+
 :link: [Unsafe or Raw String](https://docs.ansible.com/ansible/latest/user_guide/playbooks_advanced_syntax.html#unsafe-or-raw-strings)
 
 **GitHub**
