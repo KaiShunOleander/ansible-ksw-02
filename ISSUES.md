@@ -3,6 +3,16 @@
 Lesson's Learned creating Ansible Opensim
 =========================================
 
+**Ansibl**
+To create skeletons for roles, yaml files were used. When creating a role based on a skeleton the yaml files are replaced by target files, e.a. main.yml.j2 will be replaced by main.yml. Only the {{ role_name }} var;iable will be expanded. 
+If something like:
+```YAML
+   - name: Ensure test2 is started and enabled at boot.
+  service:
+    name: test2
+    state: "{{ test2_service_state }}"
+    enabled: "{{ test2_service_enabled }}"
+```
 **GitHub**
 
 *GitHub Workflows* - Molecule seems to need a playbook on a single system (localhost), so testing playbooks or roles which include different roles or target different systems seems an issue. Makes sense the workflow tests should be unit tests and not test all playbooks used to configure the opensim grid.
