@@ -5,10 +5,10 @@ Lesson's Learned creating Ansible Opensim
 
 **Ansible**
 
-*code editor* - After using just vi for coding the need arrised to get an editor that supports the yaml syntax. I first tried `atam`, which used lots of resources, switched to `sublime` which is more light weight and than when I was looking in to Travis saw people use a slick using interface that even supported git. Seems that most people either use `Xode` for a Mac or `Visual Studio Code` which you can use on Linux. There is eve a Visual Code editor for the iPad called `VSApp Code Server`
+*code editor* - After using just vi for coding the need arrised to get an editor that supports the yaml syntax. I first tried `atom`, which used lots of resources, switched to `sublime` which is more light weight and than when I was looking in to Travis saw people use a slick using interface that even supported git. Seems that most people either use `Xcode` for a Mac or `Visual Studio Code` which you can use on Linux. There is even a Visual Code editor for the iPad called `VSApp Code Server`
 
 Under Ubuntu the `Visual Code Viewer` can be installed with:
-```
+```console
 $ curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 $ sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
 $ sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
