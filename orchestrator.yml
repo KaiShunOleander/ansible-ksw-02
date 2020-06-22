@@ -12,5 +12,5 @@
       tags: ['identity', 'configure']
 
   roles:
-    - KaiShunWorlz.control
+    - opensim-workbench
     - geerlingguy.docker

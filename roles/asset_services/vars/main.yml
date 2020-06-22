@@ -1,4 +1,0 @@
----
-# vars file for asset_services
-
-robust_config: "/home/{{ admin_user}}/{{ conf_dir}}/Robust.asset.ini"

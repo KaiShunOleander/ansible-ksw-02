@@ -12,11 +12,8 @@
         cache_valid_time: 3600
       when: ansible_os_family == "Debian"
 
-- include: control.yml
-- include: baseline.yml
-- include: opensim.yml
+- include: orchestrator.yml
 - include: storage.yml
 - include: db-backup.yml
-- include: grid.yml
-- include: asset.yml
-- include: simulator.yml
+- include: grid-init.yml
+

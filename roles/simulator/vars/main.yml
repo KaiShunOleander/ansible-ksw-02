@@ -1,3 +1,0 @@
----
-# vars file for simulator
-robust_config: "/home/{{ admin_user}}/{{ conf_dir}}/conf-include/GridCommon.ini"

@@ -1,6 +1,6 @@
 ---
-- hosts: simulator
+- hosts: opensim
   become: yes
   gather_facts: yes
   roles:
-    - simulator
+    - opensim

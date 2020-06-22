@@ -1,6 +1,0 @@
----
-- hosts: asset_services
-  become: yes
-  gather_facts: yes
-  roles:
-    - asset_services

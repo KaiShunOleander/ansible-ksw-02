@@ -9,6 +9,24 @@ admin_user: gridadmin
 # conf01 : One grid server, one asset server, one region server
 config_version: "01"
 
+asset_node: "os-asset"
+inventory_node: "os-asset"
+
+grid_node: "os-login"
+estate_node: "os-login"
+message_node: "os-login"
+avatar_node: "os-login"
+agent_node: "os-login"
+presence_node: "os-login"
+user_account_node: "os-login"
+grid_user_node: "os-login"
+friend_node: "os-login"
+authentication_node: "os-login"
+user_agent_node: "os-login"
+map_node: "os-login"
+user_profile_node: "os-login"
+mute_node: "os-login"
+
 # database
 
 db_backup_node: "os-backup"

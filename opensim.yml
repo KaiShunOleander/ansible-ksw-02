@@ -1,8 +1,0 @@
----
-- hosts:
-    - opensim
-    - backup
-  become: yes
-  gather_facts: yes
-  roles:
-    - opensim

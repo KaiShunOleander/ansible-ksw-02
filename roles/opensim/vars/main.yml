@@ -1,5 +1,0 @@
----
-
-git_src: https://github.com/opensim/opensim
-git_bin: "https://github.com/KaiShunOleander/{{ host_version}}"
-git_cnf: "https://github.com/KaiShunOleander/os-config"

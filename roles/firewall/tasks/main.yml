@@ -1,7 +1,0 @@
----
-# tasks file for role-template
-
-- name: Include OS-specific variables.
-  include_vars: "vars_{{ ansible_os_family }}.yml"
-
-- include_tasks:  "{{ ansible_os_family }}.yml"
