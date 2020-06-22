@@ -20,10 +20,11 @@ $ sudo apt-get install code # or code-insiders
 *role skeletons* - To create skeletons for roles, yaml files were used. When creating a role based on a skeleton the yaml files are replaced by target files, e.a. main.yml.j2 will be replaced by main.yml. Only the {{ role_name }} var;iable will be expanded. 
 If we like to generate the following code:
 ```YAML
-   - name: Ensure nginx is started and enabled at boot.
+- name: Ensure nginx is started and enabled at boot.
   service:
     name: ngginx
     state: "{{ nginx_service_state }}"
+    enabled: "{{ nginx_service_enabled }}"
 ```
 
 then we can **can not** use the following jinja code
@@ -84,7 +85,7 @@ To avoid having to type or paste inn this access token over and over you can:
 
 
 
-**MD*
+**MD**
 
 *Usefull MD code block extentions*
 - Batchfile
