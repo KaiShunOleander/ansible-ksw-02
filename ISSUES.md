@@ -9,12 +9,12 @@ Lesson's Learned creating Ansible Opensim
 
 Under Ubuntu the `Visual Code Viewer` can be installed with:
 ```
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
-sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-sudo apt-get install apt-transport-https
-sudo apt-get update
-sudo apt-get install code # or code-insiders
+$ curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+$ sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+$ sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+$ sudo apt-get install apt-transport-https
+$ sudo apt-get update
+$ sudo apt-get install code # or code-insiders
 ```
 
 *role skeletons* - To create skeletons for roles, yaml files were used. When creating a role based on a skeleton the yaml files are replaced by target files, e.a. main.yml.j2 will be replaced by main.yml. Only the {{ role_name }} var;iable will be expanded. 
