@@ -5,7 +5,7 @@ Lesson's Learned creating Ansible Opensim
 
 **Ansible**
 
-*code editor * - After using just vi for coding the need arrised to get an editor that supports the yaml syntax. I first tried `atam`, which used lots of resources, switched to `sublime` which is more light weight and than when I was looking in to Travis saw people use a slick using interface that even supported git. Seems that most people either use `Xode` for a Mac or `Visual Studio Code` which you can use on Linux. There is eve a Visual Code editor for the iPad called `VSApp Code Server`
+*code editor* - After using just vi for coding the need arrised to get an editor that supports the yaml syntax. I first tried `atam`, which used lots of resources, switched to `sublime` which is more light weight and than when I was looking in to Travis saw people use a slick using interface that even supported git. Seems that most people either use `Xode` for a Mac or `Visual Studio Code` which you can use on Linux. There is eve a Visual Code editor for the iPad called `VSApp Code Server`
 
 Under Ubuntu the `Visual Code Viewer` can be installed with:
 ```
