@@ -1,7 +1,9 @@
 ---
 # Based on ansible-lint config
 extends: default
-
+ignore: |
+  ../../meta/main.yaml
+  
 rules:
   braces:
     max-spaces-inside: 1
@@ -17,10 +19,10 @@ rules:
     level: error
   comments: disable
   comments-indentation: disable
-  document-start: disable
+  document-start: enable
   empty-lines:
     max: 3
-    level: error
+    level: warning
   hyphens:
     level: error
   indentation: disable

@@ -1,0 +1,8 @@
+---
+
+- name: Install ufw
+  apt: 
+    name: ['ufw'] 
+    state: present
+  tags: ['packages']
+  notify: restart ufw service

@@ -7,7 +7,7 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
-  - name: Molecule_Opensim_Control
+  - name: Testing firewall role
     image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2004}-ansible:latest
     command: ""
     volumes:
@@ -16,6 +16,7 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
+
 
 scenario:
   name: default

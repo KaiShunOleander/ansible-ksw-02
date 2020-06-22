@@ -1,0 +1,7 @@
+---
+# handlers file for role-template
+
+- name: restart ufw service
+  service:
+    name: ufw
+    state: started

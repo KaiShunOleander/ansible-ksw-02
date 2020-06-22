@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "UFW Firewall"
+      include_role:
+        name: "firewall"

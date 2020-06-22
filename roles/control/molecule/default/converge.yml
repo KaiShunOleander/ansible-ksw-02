@@ -1,8 +1,0 @@
----
-- name: Converge
-  hosts: all
-
-  tasks:
-  - name: "Include role control"
-    include_role:
-      name: "control"

@@ -12,5 +12,5 @@
       tags: ['identity', 'configure']
 
   roles:
-    - control
+    - KaiShunWorlz.control
     - geerlingguy.docker
