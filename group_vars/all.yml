@@ -3,6 +3,7 @@
 ansible_python_interperter: /usr/bin/python3
 
 host_version: os-ubuntu-2004
+git_bin: https://github.com/KaiShunOleander/{{ host_version }}
 
 admin_user: gridadmin
 
@@ -64,4 +65,4 @@ remote_admin_access: false
 #
 #         To obtain a username and password send an email to opensim@vivox.com
 
-vivox: true
+vivox: false

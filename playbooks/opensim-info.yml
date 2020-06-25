@@ -1,0 +1,16 @@
+---
+- hosts: opensim
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Opensim 
+      shell: >
+          ls /home/{{ admin_user }}/opensim/bin/addin-db-002/addin-data/1/Robust* | 
+          awk -F, '{print $2}' | 
+          sed 's/.maddin//'
+      register: opensim_version
+
+
+    - name: Version Information
+      debug:
+        msg: "Opensimulator : {{ opensim_version.stdout }}"

@@ -1,0 +1,49 @@
+---
+- hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: get ubuntu releases
+      uri:
+        url: https://galaxy.ansible.com/api/v1/platforms/?name__icontains=ubuntu
+        return_content: yes
+        method: GET
+      register: page_1
+
+    - name: get page 2
+      block:
+        - name: retrieve
+          uri:
+            url: https://galaxy.ansible.com{{ page_1 | json_query('json.next_link') }}
+          register: page_2
+      
+        - name: get page 3
+          uri:
+            url: https://galaxy.ansible.com{{ page_2 | json_query('json.next_link') }}
+          register: page_3
+          when: page_2.status == 200
+      when: page_1.status == 200
+
+  
+    - name: get releases 1
+      set_fact:
+        set_1: "{{ page_1 | json_query('json.results[*].release') }}"
+      when: page_1.status == 200
+
+    - name: get releases 2
+      set_fact:
+       set_2: "{{ page_2 | json_query('json.results[*].release') }}"
+      when: page_2.status == 200
+
+    - name: get releases 3
+      set_fact:
+        set_3: "{{ page_3 | json_query('json.results[*].release') }}"
+      when: page_3.status == 200
+
+    - name: unite
+      set_fact:
+        release_set: "{{ set_1 | union(set_2) | union(set_3) }}"
+
+    - name: join
+      debug:
+        msg: "{{ release_set }}"
