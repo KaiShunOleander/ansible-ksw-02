@@ -45,10 +45,7 @@ Configuration
 - The passwords of the database are kept in a vault. You either generate a new
   vault for each group or define the vault_db_password variable in the groups_var
   file with the other variables. The location of the file containing the vault
-  passphrase is configured in `ansible.cfg` ( Default contains 'VerySecret' )
-- Compressed database backup files are send to the backup system. The ports that
-  are used for these backups are configured in the file 'infrastructure.def'
-
+  passphrase is configured in `ansible.cfg` ( Deos-asset
   Roles
   ------
 - control        : install optional tools for the control host
@@ -104,8 +101,8 @@ KaiShun Oleander
 
 eMail  : kaishun@xs4all.nl
 
-url    :http://www.kaishunworldz.com
+url    : http://www.kaishunworldz.com
 
 Github : https://github.com/KaiShunOleander
 
-Trello : https://trello.com/b/aSgcqTj2/opensimulator
+Project: https://github.com/users/KaiShunOleander/projects/1
