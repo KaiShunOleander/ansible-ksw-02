@@ -15,5 +15,5 @@
 - include: orchestrator.yml
 - include: storage.yml
 - include: db-backup.yml
-- include: grid-init.yml
+- include: opensim-grid-init.yml
 
