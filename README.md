@@ -34,7 +34,7 @@ Configuration
 ------------
 - The grid is configured by setting the variables in `group_vars/all.yml`
 - You need to configure personal information such as usernames and passwords in
-  the folder ~/.vars/opensim/ ( See roles/simulator/tasks/variables.yml )
+  the folder `~/.vars/opensim/` ( See `roles/simulator/tasks/variables.yml` )
 - Port numbers for database backups are configures in `infrastructure.def`
 - The asset server will run a mysql database. The database and the system
    account for the grid administrator are configured by setting the variables
@@ -43,22 +43,18 @@ Configuration
   database and the system account for the region server administrator are
   configured by setting the variables in `group_vars/simulator/all.yml`    
 - The passwords of the database are kept in a vault. You either generate a new
-  vault for each group or define the vault_db_password variable in the groups_var
+  vault for each group or define the `vault_db_password` variable in the groups_var
   file with the other variables. The location of the file containing the vault
-  passphrase is configured in `ansible.cfg` ( Deos-asset
-  Roles
-  ------
-- control        : install optional tools for the control host
-- baseline       : installs and configures packages common for all Servers
-- mysql          : installs and configures mysql and the database as storage provider
-                   for opensim  ( based on playbooks of geerlingguy
-- opensim        : install opensimulator from github and setup of system accounts
-- asset_services : configures the asset service and inventory service
-- grid_services  : configures all grid services
-- opensimulator  : configures the opensimulator             
-- percona        : installs percona tools and percona xtrabackup and qpress
-- db-backup      : schedules databases backups in `/etc/crontab`
-
+  passphrase is configured in `ansible.cfg` ( it contains the word `VerySecret` )
+  
+  Roles used
+  ----------
+- opensim-workbench : installs optional tools for the control host
+- geerlingguy.mysql : installs and configures mysql and the database as storage provider
+                      for opensim 
+- percona           : installs percona tools and percona xtrabackup and qpress
+- db-backup         : schedules databases backups in `/etc/crontab`
+- opensim           : installs and configures opensimulator from github
 
 Playbook tags
 ----------------
@@ -74,15 +70,11 @@ Playbook tags
 
 Playbooks
 ----------
-- site.yml      : runs the complete installation
-- control.yml   : configures the control system
-- baseline.yml  : installs common tools and mono
-- opensim.yml   : configures all servers with the common settings and software
-- storage.yml   : configures the storage provider mysql
-- db-backup.yml : configures database backups
-- asset.yml     : configures robust with the asset and inventory services
-- grid.yml      : configures robust with the grid services
-- simulator.yml : configures the simulators with the opensim services
+- site.yml         : runs the complete installation
+- orchestrator.yml : configures the ansible control system
+- db-storage.yml   : configures the storage provider mysql
+- db-backup.yml    : configures database backups
+- simulator.yml    : installs and configures grid servers
 
 
 - playbooks/
