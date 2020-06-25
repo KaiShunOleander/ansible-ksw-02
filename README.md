@@ -19,7 +19,7 @@ Servers:
 Requirements
 ------------
 
-- This setup requires three Ubuntu servers. The name of these servers are listed
+- This setup requires four Ubuntu servers. The name of these servers are listed
   in the `infrastructure.cnf` file. The following setup has been used for this
   configuration making use of Oracle VirtualBox.
   - os-asset , 2 core, 3 GB Mem, 120 GB disk
