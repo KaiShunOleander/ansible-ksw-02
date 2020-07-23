@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# ansible maintained
+#
+export LC_ALL=C
+
+db_backup_folders={{ db_backup }}
+db_backup_today="${db_backup_folders}/$(date +%a)"
+now="$(date +%Y-%m-%d)"
+
+log_file="${db_backup_today}/db-backup.log"
+threads="$(nproc --all)"
+
+set_options () {
+    xtrabackup_args=(
+        "--backup"
+        "--extra-lsndir=${db_backup_today}"
+        "--compress"
+        "--stream=xbstream"
+        "--databases={{ db_name }}"
+        "--parallel=${threads}"
+        "--compress-threads=${threads}"
+    )
+
+    backup_type="full"
+    if grep -q -s "to_lsn"  "{db_backup_today}/xtrabackup_checkpoints"; then
+      backup_type="incremental"
+      lsn=$(awk '/to_lsn/ {print $3;}' "${db_backup_today}/xtrabackup_checkpoints")
+      xtrabackup_args+=( "--incremental-lsn=${lsn}" )
+    fi
+}
+
+{% if ansible_nodename in groups['asset_database'] %} 
+take_fsassets_backup ()  {
+    source "/home/{{ admin_user }}/.restic-env"	
+    restic backup  "{{ db_assets }} "--tag=$(date +%a) --tag="${backup_type}"
+    restic forget --keep-within {{ keep_days }}d
+    restic prune -q
+}
+{% endif %}
+
+rotate_backup () {
+    day_folder_to_remove="${db_backup_folders}/$(date --date='{{ keep_days }} days ago' +%a)"
+
+    if [ -d "${day_folder_to_remove}"  ]; then
+      rm -rf "${day_folder_to_remove}"
+    fi
+}
+take_db_backup () {
+    mkdir -p "${db_backup_today}"
+    find "${db_backup_today}" -type f -name "*.incomplete" -delete
+    xtrabackup "${xtrabackup_args[@]}" --target-dir="${db_backup_today}" > "${db_backup_today}/${now}-${backup_type}.xbstream.incomplete" 2>> "${log_file}"
+    mv "${db_backup_today}/${now}-${backup_type}.xbstream.incomplete" "${db_backup_today}/${now}-${backup_type}.xbstream"
+}
+{% if ansible_nodename in groups['asset_database'] %}
+take_fsassets_backup
+{% endif %}
+set_options && rotate_backup && take_db_backup
+

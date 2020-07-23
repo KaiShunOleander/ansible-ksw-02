@@ -1,0 +1,10 @@
+---
+# tasks file for tmux
+
+- name: Install tmux.
+  package:
+    name: "{{ tmux_package_name }}"
+    state: "{{ tmux_package_state }}"
+  tags: ['packages']
+
+- include_tasks: setup_users.yml

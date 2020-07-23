@@ -1,0 +1,9 @@
+---
+# defaults file for tmux 
+
+tmux_package_name: tmux
+tmux_package_state: present
+
+tmux_users: []
+
+

@@ -1,0 +1,15 @@
+---
+# defaults file for restic 
+
+restic_package_name: restic
+restic_package_state: present
+
+# Service options.
+restic_service_state: started
+restic_service_enabled: true
+restic_restart_handler_state: restarted
+
+# Service users
+restic_users: []
+
+force_init_repository: false

@@ -1,0 +1,4 @@
+---
+# handlers file for  tmux
+- name: restart  tmux
+  service: "name=tmux state="

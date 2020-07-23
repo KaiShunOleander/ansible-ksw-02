@@ -1,0 +1,47 @@
+#
+# ansible maintained
+#
+
+export RESTIC_PASSWORD="{{ bck_app_password }}"
+
+
+
+{% if backup_type == "local" %}
+# local repository
+
+export RESTIC_REPOSITORY="{{ container_name }}/{{ bucket_name }}"
+
+{% endif %}
+
+{% if backup_type == "sftp" %}
+# sftp repository
+
+export RESTIC_USER="{{ bck_app_user }}"
+export RESTIC_HOST="{{ bck_app_host }}"
+export RESTIC_REPOSITORY="sftp:$(RESTIC_USER):$(RESTIC_HOST):{{ container_name }}/{{ bucket_name }}"
+{% endif %}
+
+
+{% if backup_type == "amazon" %}
+# Amazon S3
+export AWS_ACCESS_KEY_ID="{{ cloud_access_key }}"
+export AWS_SECRET_ACCESS_KEY="{{ cloud_secret_key }}"
+export AWS_DEFAULT_REGION="{{ cloud_region }}"
+export CLOUD_URL="s3.amazonws.com"
+export AWS_BUCKET_NAME="{{ bucket_name }}"
+
+export RESTIC_REPOSITORY="s3:$(CLOUD_URL)/{{ bucket_name }}"
+{% endif %}
+
+{% if backup_type == "digital-ocean" %}
+# digital ocean
+# An example RESTIC_REPOSITORY value would be: s3:nyc3.digitaloceanspaces.com/example-bucket. 
+# If you need to connect to a server on a non-standard port or over unsecured HTTP-only, 
+# include that information in the URL like so s3:http://example-server:3000/example-bucket.
+
+export AWS_ACCESS_KEY_ID="{{ cloud_access_key }}"
+export AWS_SECRET_ACCESS_KEY="{{ cloud_secret_key }}"
+export AWS_DEFAULT_REGION="{{ cloud_region }}"
+export CLOUD_URL="digitaloceanspaces.com"
+export AWS_BUCKET_NAME="{{ bucket_name }}"
+{% endif %}

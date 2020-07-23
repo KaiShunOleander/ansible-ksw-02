@@ -1,0 +1,42 @@
+---
+# tasks for restic
+
+- name: Install restic.
+  package:
+    name: "{{ restic_package_name }}"
+    state: "{{ restic_package_state }}"
+
+
+- name: set restic environment
+  template:
+    src: restic-env.j2
+    dest: "/home/{{ bck_app_user }}/.restic-env"
+    owner: "{{ bck_app_user }}"
+
+- name: check container is present
+  stat: path="{{ container_name }}"
+  register: container_present
+
+- name: create container
+  file:
+    path: "{{ container_name }}"
+    state: directory
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0644
+  changed_when: no
+  when: not container_present
+
+- name: check repository existance
+  shell: restic -r "{{ container_name }}/{{ bucket_name }}" snapshots
+  environment:
+    - RESTIC_PASSWORD: "{{ bck_app_password }}"
+  register: repository_present
+  ignore_errors: true
+
+- name: create restic repository
+  shell: restic -r "{{ container_name }}/{{ bucket_name }}" init
+  environment:
+    - RESTIC_PASSWORD: "{{ bck_app_password }}"
+  when: not repository_present.rc == 0 or force_init_repository
+
