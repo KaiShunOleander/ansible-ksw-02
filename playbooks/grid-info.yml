@@ -1,7 +1,9 @@
 ---
-- hosts: grid_services
+- hosts: opensim
   become: yes
   gather_facts: yes
+
+
   tasks:
     - name: Gather Database Information
       command: 'mysql --version'
@@ -25,11 +27,14 @@
         : DISK({{ disk_free.stdout_lines[1] }})
         : MySQL({{ mysql_cli_version.stdout[10:16] }})"
 
-    - name: User Account information
-      command: >
-        mysql opensim -t -e 'select PrincipalID, FirstName, LasTName, UserLevel from UserAccounts;'
-      register: UserAccountService
-
-    - name: Avatar information
-      debug:
-        msg: "{{ UserAccountService.stdout_lines }}"
+    - name: avatar information
+      block:
+        - name: User Account information
+          command: >
+            mysql "{{ db_name }}" -t -e 'select PrincipalID, FirstName, LasTName, UserLevel from UserAccounts;'
+          register: UserAccountService
+ 
+        - name: Avatar information
+          debug:
+            msg: "{{ UserAccountService.stdout_lines }}"
+      when: ansible_nodename in groups['grid_services'] 

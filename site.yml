@@ -4,7 +4,7 @@
 
 - hosts: all
   become: yes
-  gather_facts: no
+  gather_facts: yes
   tasks:
     - name: Update apt cache
       apt:
@@ -12,8 +12,7 @@
         cache_valid_time: 3600
       when: ansible_os_family == "Debian"
 
-- include: orchestrator.yml
-- include: storage.yml
+# include: orchestrator.yml
+- include: simulator.yml
+- include: db-storage.yml
 - include: db-backup.yml
-- include: opensim-grid-init.yml
-

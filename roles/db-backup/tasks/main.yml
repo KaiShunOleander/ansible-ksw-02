@@ -1,35 +1,19 @@
 ---
 # tasks file for db-backup
 
-- name: Schedule daily full database backups
+- name: install backup script
+  template:
+    src: opensim-backup.sh.j2
+    dest: /usr/bin/opensim-backup.sh
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: '0754'
+
+- name: Schedule database backups
   cron:
-    name: "Stream Full Databse Backup"
-    cron_file: "/etc/crontab"
-    job: "sudo xtrabackup --backup --compressed --stream=xbstream  | nc os-backup {{ backup_port }}"
+    name: "schedule daily opensim database backups"
+    job: "/usr/bin/opensim-backup.sh"
     weekday: "*"
-    hour: "{{ backup_hour }}"
+    hour: "{{ backup_hours}}"
     minute: "{{ backup_minute }}"
     user: "{{ admin_user }}"
-  when: not ansible_nodename  ==  db_backup_node
-
-- name: Create backup folders
-  file:
-    path: /var/backups/{{ item }}
-    state: directory
-    mode: 0644
-  with_items:
-    - "{{ groups['robust'] }}"
-  when: ansible_nodename == db_backup_node
-
-- name: Schedule receptiom of daily full database backups on the backup system
-  cron:
-    name: "Receive full database backup from system {{ item }}"
-    cron_file: "/etc/crontab"
-    job: "sudo nc -l {{ hostvars[item]['backup_port'] }} | sudo xbstream -xv -C /var/backups/{{ item }}"
-    weekday: "*"
-    hour: "{{ backup_hour }} "
-    minute: "{{ backup_minute }}"
-    user: "ansible"
-  with_items:
-    - "{{ groups['robust'] }}"
-  when: ansible_nodename ==  db_backup_node

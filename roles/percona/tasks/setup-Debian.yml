@@ -15,7 +15,7 @@
 
 - name: Download Percona xtrabackup if not installed
   apt:
-    deb: https://www.percona.com/downloads/Percona-XtraBackup-LATEST/Percona-XtraBackup-8.0.12/binary/debian/focal/x86_64/percona-xtrabackup-80_8.0.12-1.focal_amd64.deb
+    deb: https://www.percona.com/downloads/Percona-XtraBackup-LATEST/Percona-XtraBackup-8.0.13/binary/debian/focal/x86_64/percona-xtrabackup-80_8.0.13-1.focal_amd64.deb
   when: not percona_xtrabackup_installed.stat.exists
 
 - name: Update apt cache if Percona Tools are not yet installed.

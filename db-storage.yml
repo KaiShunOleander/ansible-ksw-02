@@ -4,6 +4,9 @@
   become: yes
   gather_facts: yes
   vars:
+    mysql_user_home: "/home/{{ admin_user }}"
+    mysql_user_name: " {{ db_user }}"
+    mysql_user_password: "{{ db_password }}"
     mysql_config_include_files:
       - src: authentication.cnf
     mysql_databases:
@@ -24,6 +27,66 @@
         ansible_python_interpreter: "{{ ansible_facts.python.executable }}"
       when: ansible_python_interpreter is not defined
 
+    - name: create database container
+      file:
+
+
   roles:
     - geerlingguy.mysql
-    - percona
+
+  post_tasks:
+  - name:  redirect the database container
+    stat: path="{{ db_container }}"
+    register: database_container_present
+
+  - name: create database container
+    file:
+      state: directory
+      path: "{{ db_container }}"
+    when: not database_container_present,stat.exists
+
+  - name: check mysql data directory present
+    stat: path="{{ db_container }}/mysql"
+    register: mysql_data_dir_present
+
+  - name: setup mysql data directory
+    block:
+      - name: stop mysql service
+        service: "name={{ mysql_deamon }} state= stopped sleep=5"
+
+      - name: move mysql data directory
+        command: mv  {{ mysql_datadir }} {{ db_container }}
+
+      - name: link datadir to default location
+        file:
+          src: "{{ db_container }}/mysql"
+          dest: "{{ mysql_datadir }}"
+          state: link
+        changed_when: no
+        tags: ['deploy']
+
+      - name: check Access Control Sysem
+        stat: path="/etc/apparmor.d"
+        register: apparmor_installed
+
+      - name: reconfigure apparmor block
+        block:
+          - name: add database container to apparmor
+            blockinfile:
+              path: "/etc/apparmor.d/usr.sbin.mysqld"
+              marker: "# Ansible inserted database container path"
+              insertafter: "# Allow data dir access"
+              block: |
+                /var/db/mysq/ r
+                /var/db/mysql/** rwk,
+
+          - name: reparse apparmor mysql settings
+            command: apparmor_parser --replace /etc/apparmor.d/usr.sbin.mysqld
+        when: apparmor_installed.stat.exists
+
+      - name: restart mysql
+        service: "name={{ mysql_daemon }} state=started sleep=5"
+    when: not mysql_data_dir_present.stat.exists
+
+
+

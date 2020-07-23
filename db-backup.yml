@@ -1,9 +1,34 @@
 ---
 # Percona backup is provided for mysql on each opensim server
 - hosts:
-    - robust
-    - backup
+    - opensim
   become: yes
   gather_facts: yes
+
+  vars:
+    backup_type: local
+    bck_app_user: "{{ admin_user }}"
+    bck_app_group: "{{ admin_group }}"
+    bck_app_host: localhost
+    bck_app_password: "{{ vault_bck_app_password }}"
+
+db/backups/restic"
+    bucket_name: "opensim_db.{{ ansible_nodename }}"
+  
+    users:
+      - username: "{{ admin_user }}"
+        groups: ['backup', 'mysql']
+        home:  "/home/{{ admin_user }}"
+
   roles:
+    # configure system account for backup user
+    - singleplatform-eng.users
+
+    # Percona Xtrabackup with stream compressed database backups to restic
+    - percona
+
+    # Restic will keep the fsassets backups in a repository
+    - restic
+
+    #  Databse backups will be scheduled with cron for opensim admin user
     - db-backup

@@ -2,5 +2,9 @@
 - hosts: opensim
   become: yes
   gather_facts: yes
+  vars:
+    tmux_users:
+      - "{{ admin_user }}"
   roles:
     - opensim
+    - tmux

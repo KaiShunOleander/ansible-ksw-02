@@ -6,11 +6,17 @@
   pre_tasks:
     - name: set the docker user
       set_fact:
-        docker_user: 
+        docker_user:
           - "{{ lookup('env', 'USER') }}"
       become: no
       tags: ['identity', 'configure']
 
+    - name: set the tmux user
+      set_fact:
+        tmux_users:
+          - "{{ docker_user }}"
+
   roles:
+    - tmux
     - opensim-workbench
     - geerlingguy.docker

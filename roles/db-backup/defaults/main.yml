@@ -1,4 +1,5 @@
 ---
 # defaults file for db-backup
-backup_hour: "02" 
+backup_hours: "02,10,18"
 backup_minute: "03"
+keep_days: "3"
