@@ -65,6 +65,7 @@
         changed_when: no
         tags: ['deploy']
 
+      # To be changed so SELinux also supported . Platform dependent
       - name: check Access Control Sysem
         stat: path="/etc/apparmor.d"
         register: apparmor_installed
@@ -77,7 +78,7 @@
               marker: "# Ansible inserted database container path"
               insertafter: "# Allow data dir access"
               block: |
-                /var/db/mysq/ r
+                /var/db/mysql/ r
                 /var/db/mysql/** rwk,
 
           - name: reparse apparmor mysql settings
