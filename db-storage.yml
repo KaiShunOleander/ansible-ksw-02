@@ -80,7 +80,7 @@
             command: apparmor_parser --replace /etc/apparmor.d/usr.sbin.mysqld
         when: apparmor_installed.stat.exists
 
-      - name: restart mysql
+      - name: start mysql service
         service: "name={{ mysql_daemon }} state=started sleep=5"
     when: not mysql_data_dir_present.stat.exists
 

@@ -1,0 +1,23 @@
+# sftp is provided to upload files to the default region server
+- hosts:
+    - region00
+  become: yes
+  gather_facts: no
+
+- vars:
+    sftp_user: gridfiles
+    sftp_password: "{{ vault_sftp_password }}"
+    sftp_group: "{{ admin_group }}"
+    sftp_folder: "/var/sftp/uploads"
+
+    users:
+      - username:  "{{ sftp_user }}"
+        password: "{{ sftp_password }}"
+        groups: "{{ sftp_group }}"
+        home: "/home/{{ sftp_user }}"
+
+  roles:
+      # configure system account for sftp user who will uplaod iar/oar files
+    - singleplatform-eng.users 
+
+    - sftp-user

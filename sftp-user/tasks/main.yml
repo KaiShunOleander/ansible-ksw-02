@@ -1,0 +1,34 @@
+---
+# tasks file for sftp-user
+
+- name: check upload folder is present
+  stat: path="{{ sftp_folder }}"
+  register: sftp_folder_present
+
+- name: create sftp upload folder
+  file:
+    path: "{{ sftp_uploads }}"
+    state: directory
+    owner: "{{ sftp_user }}"
+    group: "{{ sftp__group }}"
+    mode: 0644
+  changed_when: no
+  when: not sftp_folder_present
+
+# Allow the ftp user to upload files but no ssh login
+- name: config sftp user
+  blockinfile:
+    path: "/etc/ssh/sshd_config"
+    marker: "# Ansible inserted sftp user"
+    insertafter: EOF
+    backup: yes
+    block: |
+      PasswordAuthentication yes
+      Match user "{{ sftp_user }}"
+      ForceCommand internal-sftp
+      ChrootDirectory "{{ sftp_folder }}"
+      PermitTunnel no
+      AllowAgentForwarding no
+      AllowTcpForwarding no
+      X11Forwarding no
+  notify: restart sshd

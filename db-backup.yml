@@ -12,7 +12,7 @@
     bck_app_host: localhost
     bck_app_password: "{{ vault_bck_app_password }}"
 
-db/backups/restic"
+    container_name: "/var/db/backups/restic"
     bucket_name: "opensim_db.{{ ansible_nodename }}"
   
     users:
