@@ -1,14 +1,4 @@
 ---
 # defaults file for sftp-user 
 
-sftp-user_package_name: sftp-user
-sftp-user_package_state: present
-
-# Service options.
-(( role_name }}_service_state: started
-(( role_name }}_service_enabled: true
-(( role_name }}_restart_handler_state: restarted
-
-# Service users
-sftp-user_users: []
 

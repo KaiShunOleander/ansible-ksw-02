@@ -1,19 +1,33 @@
 ---
 # tasks file for sftp-user
 
-- name: check upload folder is present
+# There must be a sftp root folder owned by root
+- name: check sftp root folder
   stat: path="{{ sftp_folder }}"
   register: sftp_folder_present
 
+- name: create sftp root folder
+  file:
+    path: "{{ sftp_folder }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: not sftp_folder_present.stat.exists
+
+# Create the user upload folder
+- name: check upload folder is present
+  stat: path="{{ sftp_folder}}/{{ sftp_user }}"
+  register: sftp_upload_folder_present
+
 - name: create sftp upload folder
   file:
-    path: "{{ sftp_uploads }}"
+    path: "{{ sftp_folder }}/{{ sftp_user }}"
     state: directory
     owner: "{{ sftp_user }}"
-    group: "{{ sftp__group }}"
+    group: "{{ sftp_group }}"
     mode: 0644
-  changed_when: no
-  when: not sftp_folder_present
+  when: not sftp_upload_folder_present.stat.exists
 
 # Allow the ftp user to upload files but no ssh login
 - name: config sftp user
@@ -24,11 +38,12 @@
     backup: yes
     block: |
       PasswordAuthentication yes
-      Match user "{{ sftp_user }}"
+      Match User {{ sftp_user }}
       ForceCommand internal-sftp
-      ChrootDirectory "{{ sftp_folder }}"
+      ChrootDirectory {{ sftp_folder }}
       PermitTunnel no
       AllowAgentForwarding no
       AllowTcpForwarding no
       X11Forwarding no
   notify: restart sshd
+  when: not sftp_upload_folder_present.stat.exists

@@ -1,4 +1,4 @@
 ---
 # handlers file for  sftp-user
 - name: restart sshd
-  service: name=sshd state=restart
+  service: name=sshd state=restarted
