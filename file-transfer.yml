@@ -8,7 +8,7 @@
     sftp_password: "{{ vault_sftp_password }}"
     sftp_group: "{{ admin_group }}"
     sftp_folder: "/var/sftp"
-    sftp_uploads: "{{ sftp_folder }}/uploads"
+
 
     users:
       - username:  "{{ sftp_user }}"
