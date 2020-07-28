@@ -5,7 +5,7 @@
 
   vars:
     sftp_user: gridfiles
-    sftp_password: "{{ vault_sftp_password }}"
+    sftp_password: "{{ '{{ vault_sftp_password }}' | password_hash('sha256') }}"
     sftp_group: "{{ admin_group }}"
     sftp_folder: "/var/sftp"
 
