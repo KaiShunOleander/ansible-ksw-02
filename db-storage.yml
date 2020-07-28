@@ -5,7 +5,7 @@
   gather_facts: yes
   vars:
     mysql_user_home: "/home/{{ admin_user }}"
-    mysql_user_name: " {{ db_user }}"
+    mysql_user_name: "{{ db_user }}"
     mysql_user_password: "{{ db_password }}"
     mysql_config_include_files:
       - src: authentication.cnf
@@ -44,11 +44,14 @@
     stat: path="{{ db_container }}/mysql"
     register: mysql_data_dir_present
 
+
+
+
   - name: setup mysql data directory
     block:
       - name: stop mysql service
-        service: "name={{ mysql_deamon }} state= stopped sleep=5"
-
+        service: "name={{ mysql_deamon }} state=stopped sleep=5"
+        
       - name: move mysql data directory
         command: mv  {{ mysql_datadir }} {{ db_container }}
 
@@ -81,8 +84,10 @@
 
       - name: start mysql service
         service: "name={{ mysql_daemon }} state=started sleep=5"
+
     when: not mysql_data_dir_present.stat.exists
-    tags: ['deploy']
+
+
 
 
 

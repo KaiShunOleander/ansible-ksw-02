@@ -3,4 +3,7 @@
   template:
     src: tmux.conf.j2
     dest: "/home/{{ item }}/.tmux.conf"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_group }}"
+    mode: 0755
   with_items: "{{ tmux_users }}"
