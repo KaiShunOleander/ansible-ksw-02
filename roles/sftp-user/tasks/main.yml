@@ -26,7 +26,7 @@
     state: directory
     owner: "{{ sftp_user }}"
     group: "{{ sftp_group }}"
-    mode: 0644
+    mode: 0755
   when: not sftp_upload_folder_present.stat.exists
 
 # Allow the ftp user to upload files but no ssh login
