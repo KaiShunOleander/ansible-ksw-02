@@ -38,7 +38,7 @@
     file:
       state: directory
       path: "{{ db_container }}"
-    when: not database_container_present,stat.exists
+    when: not database_container_present.stat.exists
 
   - name: check mysql data directory present
     stat: path="{{ db_container }}/mysql"
@@ -58,7 +58,6 @@
           dest: "{{ mysql_datadir }}"
           state: link
         changed_when: no
-        tags: ['deploy']
 
       # To be changed so SELinux also supported . Platform dependent
       - name: check Access Control Sysem
@@ -73,8 +72,8 @@
               marker: "# Ansible inserted database container path"
               insertafter: "# Allow data dir access"
               block: |
-                /var/db/mysql/ r
-                /var/db/mysql/** rwk,
+                {{ db_container }}/mysql/ r
+                {{ db_container }}/mysql/** rwk,
 
           - name: reparse apparmor mysql settings
             command: apparmor_parser --replace /etc/apparmor.d/usr.sbin.mysqld
@@ -83,6 +82,7 @@
       - name: start mysql service
         service: "name={{ mysql_daemon }} state=started sleep=5"
     when: not mysql_data_dir_present.stat.exists
+    tags: ['deploy']
 
 
 
