@@ -13,13 +13,13 @@
       when: ansible_os_family == "Debian"
 
 # configure localhost as Ansible Orchestrator Host
-# include: orchestrator.yml
+- include: orchestrator.yml
 
 # configure the robust nodes and the simulator nodes
 - include: simulator.yml
 
 # configure default simulator node to be able to receive uploads with sftp
-- include file-transfer.yml
+- include: file-transfer.yml
 
 # configure opensim nodes with a storage provider
 - include: db-storage.yml

@@ -1,0 +1,15 @@
+---
+- hosts: os-login
+  become: yes
+  gather_facts: no
+
+
+  tasks:
+    - name: show avatars
+      command: >
+        mysql "{{ db_name }}" -t -e 'select PrincipalID, FirstName, LasTName, UserLevel from UserAccounts order by 'LastName';'
+      register: UserAccountService
+ 
+    - name: Avatar information
+      debug:
+        msg: "{{ UserAccountService.stdout_lines }}"

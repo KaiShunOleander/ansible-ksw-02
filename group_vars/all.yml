@@ -39,8 +39,7 @@ db_assets: "{{ db_container }}/fsassets"
 
 # Network
 
-os_public_port: 8002
-os_private_port: 8003
+
 
 # login service
 WelcomeMessage: "Welcome, Spirit!!!"

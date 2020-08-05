@@ -8,7 +8,7 @@
     mysql_user_name: "{{ db_user }}"
     mysql_user_password: "{{ db_password }}"
     mysql_config_include_files:
-      - src: authentication.cnf
+      - src: mysql.authentication.cnf
     mysql_databases:
       - name: "{{ db_name }}"
         collation: utf8_general_ci
@@ -20,6 +20,7 @@
         host: localhost
         password: "{{ db_password }}"
         priv: "*.*:ALL"
+
 
   pre_tasks:
     - name: Set discovered Ansible Python interpreter.
@@ -50,8 +51,8 @@
   - name: setup mysql data directory
     block:
       - name: stop mysql service
-        service: "name={{ mysql_deamon }} state=stopped sleep=5"
-        
+        service: "name={{ mysql_daemon }} state=stopped sleep=5"
+
       - name: move mysql data directory
         command: mv  {{ mysql_datadir }} {{ db_container }}
 
@@ -75,8 +76,8 @@
               marker: "# Ansible inserted database container path"
               insertafter: "# Allow data dir access"
               block: |
-                {{ db_container }}/mysql/ r
-                {{ db_container }}/mysql/** rwk,
+                "  {{ db_container }}/mysql/ r."
+                "  {{ db_container }}/mysql/** rwk,"
 
           - name: reparse apparmor mysql settings
             command: apparmor_parser --replace /etc/apparmor.d/usr.sbin.mysqld

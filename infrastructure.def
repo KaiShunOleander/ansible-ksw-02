@@ -20,13 +20,7 @@ os-region00 backup_port=9990
 robust
 simulator
 
-# All systems that will offer the grid services
-[grid_services]
-os-login
 
-# All systems that will offer the asset and inventory service
-[asset_services]
-os-asset
 
 [asset_database]
 os-asset
@@ -37,3 +31,57 @@ os-backup
 
 [webserver]
 nginx00
+
+# OpenSim Services
+[opensim_services:children]
+asset_services
+inventory_services
+grid_services
+grid_info_services
+presence_services
+
+[asset_services]
+os-asset os_private_port=8003
+
+[inventory_services]
+os-asset os_private_port=8003
+
+[grid_services]
+os-login os_public_port=8002 Os_private_port=8003
+
+[grid_info_services]
+os-login public_os_port=8002 os_private_port=8003
+
+[authentication_services]
+os-login os_public_port=8002 os_private_port=8003
+
+[openid_services]
+os-login public_port=8002 os_private_port=8003
+
+[avatar_services]
+os-login os_public_port=8002 os_private_port=8003
+
+[login_services]
+os-login os_public_port=8002 os_private_port=8003
+
+[presence_services]
+os-login os_public_port=8002 os_private_port=8003
+
+[user_account_services]
+os-login os_public_port=8002 os_private_port=8003
+
+[user_profile_services]
+os-login os_public_port=8002 os_private_port=8003
+
+[grid_user_services]
+os-login os_public_port=8002 os_private_port=8003
+
+[agent_services]
+os-login os_public_port=8002 os_private_port=8003
+
+[friend_services]
+os-login os_public_port=8002 os_private_port=8003
+
+[map_services]
+os-login public_port=8002 private_port=8003
+

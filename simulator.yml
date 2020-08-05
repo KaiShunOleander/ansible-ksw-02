@@ -1,5 +1,5 @@
 ---
-- hosts: opensim
+- hosts: simulator
   become: yes
   gather_facts: yes
   vars:
